@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>日本語テキストラボ — N5 / N4</title>
+  <title>日本語テキストラボ — N5</title>
 
   <style>
     :root{
@@ -17,11 +17,6 @@
       --muted: rgba(14,22,48,.70);
       --muted2: rgba(14,22,48,.52);
 
-      --hue: 210;
-      --a1: hsl(calc(var(--hue) + 10) 90% 45%);
-      --a2: hsl(calc(var(--hue) - 20) 92% 44%);
-      --a3: hsl(calc(var(--hue) + 55) 88% 48%);
-
       --shadow: 0 18px 55px rgba(12,18,40,.12);
       --shadow2: 0 10px 30px rgba(12,18,40,.10);
 
@@ -32,7 +27,11 @@
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
       --jp: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", var(--sans);
 
+      /* Controle global de tamanho */
       --fontScale: 1;
+
+      /* Explicações maiores (PT-BR) */
+      --explainScale: 1.18;
     }
 
     body.theme-dark{
@@ -133,40 +132,6 @@
       align-items:center;
       min-width: 0;
     }
-    .logo{
-      width: 44px; height: 44px;
-      border-radius: 14px;
-      background:
-        radial-gradient(80% 80% at 20% 20%, rgba(255,255,255,.35), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.26), rgba(255,255,255,.10));
-      border: 1px solid var(--stroke);
-      position:relative;
-      overflow:hidden;
-      flex: 0 0 auto;
-      box-shadow: var(--shadow2);
-    }
-    body.theme-dark .logo{
-      background:
-        radial-gradient(80% 80% at 20% 20%, rgba(255,255,255,.22), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.04));
-    }
-    .logo::after{
-      content:"";
-      position:absolute; inset:-40%;
-      background: conic-gradient(from 180deg,
-        rgba(255,255,255,0),
-        rgba(255,255,255,.35),
-        rgba(255,255,255,0));
-      transform: rotate(12deg);
-      animation: sheen 3.8s ease-in-out infinite;
-      opacity:.85;
-      pointer-events:none;
-    }
-    @keyframes sheen{
-      0%{ transform: translateX(-18%) rotate(12deg); }
-      55%{ transform: translateX(18%) rotate(12deg); }
-      100%{ transform: translateX(-18%) rotate(12deg); }
-    }
 
     .brandTitle{ display:flex; flex-direction:column; gap: 2px; min-width: 0; }
     .brandTitle .name{
@@ -197,7 +162,6 @@
     .row{ display:flex; gap: 10px; align-items:center; flex-wrap:wrap; }
     .col{ display:flex; flex-direction:column; gap: 10px; }
 
-    /* RESPONSIVO */
     @media (max-width: 980px){
       body{ overflow:auto; }
       .app{
@@ -214,7 +178,6 @@
       .app{ padding: 10px; gap: 10px; }
       .panelHeader{ padding: 12px 12px 10px; }
       .content{ padding: 12px; }
-      .logo{ width: 40px; height: 40px; border-radius: 13px; }
       .brandTitle .name{ font-size: 13px; }
       .brandTitle .sub{ font-size: 11px; }
     }
@@ -302,6 +265,7 @@
       user-select:none;
       background: transparent;
       touch-action: manipulation;
+      white-space: nowrap;
     }
     .segBtn.active{
       color: var(--text);
@@ -451,15 +415,14 @@
 
     .reading{
       margin-top: 8px;
-      font-size: calc(13px * var(--fontScale));
+      font-size: calc(14.5px * var(--fontScale));
       color: var(--muted);
       font-family: var(--jp);
-      line-height: 1.45;
+      line-height: 1.5;
       word-break: break-word;
     }
 
     .lineBadges{ display:flex; flex-direction:column; gap: 8px; align-items:flex-end; }
-
     @media (max-width: 520px){
       .lineTop{ flex-direction:column; align-items:stretch; }
       .lineBadges{ flex-direction:row; justify-content:flex-start; flex-wrap:wrap; align-items:center; }
@@ -477,7 +440,7 @@
       box-shadow: 0 8px 18px rgba(12,18,40,.06);
     }
     body.theme-dark .chk{ background: rgba(0,0,0,.20); box-shadow:none; }
-    .chk input{ accent-color: var(--a1); }
+    .chk input{ accent-color: #2b67ff; }
 
     .details{
       margin-top: 12px;
@@ -493,6 +456,7 @@
       grid-template-columns: 1fr;
       gap: 10px;
     }
+
     .box{
       border: 1px solid var(--stroke);
       background: rgba(255,255,255,.78);
@@ -507,17 +471,21 @@
       margin-bottom: 8px;
     }
     .boxTitle b{
-      font-size: 12px;
+      font-size: calc(12.5px * var(--explainScale));
       color: var(--muted);
       letter-spacing:.18px;
       text-transform: uppercase;
     }
     .box p{
       margin: 0;
-      font-size: calc(13.6px * var(--fontScale));
+      font-size: calc(15.5px * var(--fontScale) * var(--explainScale));
       color: var(--text);
-      line-height: 1.62;
+      line-height: 1.72;
       word-break: break-word;
+    }
+    .box p[style*="font-family: var(--mono)"]{
+      font-size: calc(14.5px * var(--fontScale) * var(--explainScale));
+      line-height: 1.7;
     }
 
     .hr{ border:0; border-top: 1px solid var(--stroke2); margin: 12px 0; }
@@ -636,18 +604,8 @@
     .ic{ width: 14px; height: 14px; display:inline-block; }
     .ic svg{ width:100%; height:100%; fill: currentColor; opacity:.9; }
 
-    ruby{
-      ruby-position: over;
-      ruby-align: center;
-      font-variant-east-asian: ruby;
-      line-height: 1.6;
-    }
-    rt{
-      font-size: 0.58em;
-      color: rgba(14,22,48,.70);
-      font-weight: 900;
-      letter-spacing: .2px;
-    }
+    ruby{ ruby-position: over; ruby-align: center; font-variant-east-asian: ruby; line-height: 1.6; }
+    rt{ font-size: 0.58em; color: rgba(14,22,48,.70); font-weight: 900; letter-spacing: .2px; }
     body.theme-dark rt{ color: rgba(234,240,255,.78); }
   </style>
 </head>
@@ -656,16 +614,15 @@
   <div class="aurora"></div>
 
   <div class="app" id="app">
-    <!-- LEFT -->
     <section class="panel" id="leftPanel" aria-label="Biblioteca">
       <div class="panelHeader">
         <div class="brand">
-          <div class="logo" aria-hidden="true"></div>
           <div class="brandTitle">
             <div class="name">日本語テキストラボ</div>
-            <div class="sub">N5 / N4</div>
+            <div class="sub">N5</div>
           </div>
         </div>
+
         <div class="row">
           <button class="btn" id="btnTheme">Aparência: Claro</button>
         </div>
@@ -673,9 +630,9 @@
 
       <div class="content">
         <div class="col">
-          <div class="segmented" aria-label="Nível">
-            <button class="segBtn active" id="segN5" type="button">N5</button>
-            <button class="segBtn" id="segN4" type="button">N4</button>
+          <div class="segmented" aria-label="Conteúdo">
+            <button class="segBtn active" id="segTEXTOS" type="button">TEXTOS N5</button>
+            <button class="segBtn" id="segEST" type="button">ESTRUTURAS N5</button>
           </div>
 
           <input class="input" id="searchInput" placeholder="Buscar título / JP / palavra-chave..." />
@@ -683,7 +640,7 @@
           <div class="kpi" aria-label="Resumo">
             <div class="kpiCard">
               <div class="v" id="kpiTexts">0</div>
-              <div class="l">Textos</div>
+              <div class="l">Itens</div>
             </div>
             <div class="kpiCard">
               <div class="v" id="kpiLinesDone">0</div>
@@ -700,7 +657,7 @@
               <span class="ic" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M12 6V3L8 7l4 4V8c2.76 0 5 2.24 5 5a5 5 0 1 1-9.9-1h-2.02A7 7 0 1 0 12 6z"/></svg>
               </span>
-              Reset progresso
+              Resetar progresso
             </button>
           </div>
 
@@ -711,18 +668,17 @@
       </div>
     </section>
 
-    <!-- RIGHT -->
     <section class="panel" aria-label="Leitor">
       <div class="panelHeader">
         <div class="mainHeader">
           <div class="hTitle">
-            <h1 id="textTitle">Selecione um texto</h1>
+            <h1 id="textTitle">Selecione um item</h1>
             <div class="meta" id="textMeta"></div>
           </div>
 
           <div class="row">
             <div class="tabs" role="tablist" aria-label="Abas">
-              <div class="tab active" data-tab="TAB_TEXT" role="tab">Texto</div>
+              <div class="tab active" data-tab="TAB_TEXT" role="tab">Conteúdo</div>
               <div class="tab" data-tab="TAB_VOCAB" role="tab">Vocabulário</div>
               <div class="tab" data-tab="TAB_FLASH" role="tab">Deck</div>
               <div class="tab" data-tab="TAB_QUIZ" role="tab">Quiz</div>
@@ -743,11 +699,13 @@
         <div id="emptyState" style="opacity:.98">
           <div class="box">
             <div class="boxTitle">
-              <b>Controles</b>
-              <span class="tag">Estudo</span>
+              <b>Como usar</b>
+              <span class="tag">N5</span>
             </div>
             <p>
-              Use os botões para se testar: desligue tradução/leitura e confirme mentalmente antes de abrir detalhes.
+              Use <b>TEXTOS N5</b> para leitura do cotidiano.
+              Use <b>ESTRUTURAS N5</b> para padrões que se repetem muito.
+              Ajuste o tamanho com <b>A- / A+</b>.
             </p>
           </div>
 
@@ -782,10 +740,10 @@
         <div id="tab_VOCAB" style="display:none">
           <div class="box">
             <div class="boxTitle">
-              <b>Vocabulário do texto</b>
-              <span class="tag">Verbos: tipo</span>
+              <b>Vocabulário</b>
+              <span class="tag">deck</span>
             </div>
-            <p>Quando for verbo, o site indica em PT-BR se é <b>verbo transitivo</b> ou <b>verbo intransitivo</b>.</p>
+            <p>Use <b>+ Deck</b> para revisar depois (spaced repetition simples).</p>
           </div>
           <div class="vocabGrid" id="vocabGrid"></div>
         </div>
@@ -794,9 +752,9 @@
           <div class="box">
             <div class="boxTitle">
               <b>Deck</b>
-              <span class="tag">repetição</span>
+              <span class="tag">revisão</span>
             </div>
-            <p>Revele a resposta e marque sua confiança (1/2/3). O site agenda automaticamente.</p>
+            <p>Revele a resposta e marque (1/2/3). O site agenda automaticamente.</p>
           </div>
 
           <div class="cardWrap">
@@ -836,13 +794,13 @@
           <div class="box">
             <div class="boxTitle">
               <b>Quiz</b>
-              <span class="tag">fechamento</span>
+              <span class="tag">fixação</span>
             </div>
-            <p>Gere perguntas a partir do vocabulário do texto (ou do seu deck).</p>
+            <p>Gere perguntas a partir do vocabulário do item (ou do seu deck).</p>
             <div class="row">
               <button class="btn btnPrimary" id="btnNewQuiz">Gerar quiz</button>
               <select class="select" id="quizSource" style="max-width:260px">
-                <option value="TEXT">Fonte: Vocabulário do texto</option>
+                <option value="TEXT">Fonte: Vocabulário do item</option>
                 <option value="DECK">Fonte: Meu deck</option>
               </select>
               <select class="select" id="quizCount" style="max-width:200px">
@@ -860,10 +818,10 @@
           <div class="box">
             <div class="boxTitle">
               <b>Notas</b>
-              <span class="tag">auto-save</span>
+              <span class="tag">salva automático</span>
             </div>
             <p>Guarde padrões, frases úteis e observações rápidas.</p>
-            <textarea class="textarea" id="textNotes" placeholder="Ex.: 〜ことになった / 〜ておく / 〜ように / etc."></textarea>
+            <textarea class="textarea" id="textNotes" placeholder="Ex.: 〜てから / 〜たい / は vs が / etc."></textarea>
             <div class="row" style="justify-content:space-between;align-items:center">
               <div class="muted" style="font-size:12px">Salvo automaticamente</div>
               <button class="btn" id="btnClearNotes">Limpar notas</button>
@@ -875,7 +833,6 @@
     </section>
   </div>
 
-  <!-- Focus overlay -->
   <div class="focus" id="focusOverlay">
     <section class="panel" style="height:100%">
       <div class="panelHeader">
@@ -903,14 +860,15 @@
   </div>
 
   <script>
-    /***********************
-     * TEXTOS (mesma base)
-     * vt: "他" ou "自" fica interno, mas o site exibe em PT-BR.
-     ***********************/
     const builtInTexts = [
+
+      /* ===========================
+         TEXTOS N5
+         =========================== */
+
       {
-        id: "n5_school_day",
-        level: "N5",
+        id: "t_n5_school_day",
+        level: "TEXTOS",
         title: "学校の一日",
         desc: "rotina / horas / sequência て-form",
         tags: ["学校","日常"],
@@ -922,11 +880,7 @@
             pt: "Eu acordo às seis da manhã todos os dias.",
             structure: "私は + (tempo) + (hora) に + 起きます",
             literal: "Quanto a mim, (toda manhã) (às seis) eu acordo.",
-            points: [
-              "は marca tópico.",
-              "に marca horário específico.",
-              "起きる é geralmente verbo intransitivo (a ação acontece com o sujeito)."
-            ],
+            points: ["は marca tópico.","に marca horário específico.","起きる é intransitivo."],
             grammar: "Aは + tempo + horaに + Vます",
             breakdown: [
               { jp:"私", r:"わたし", m:"eu", note:"pronome" },
@@ -949,17 +903,13 @@
             pt: "Eu como o café da manhã e tomo banho.",
             structure: "Aを 食べて、Bを 浴びます",
             literal: "(Café da manhã) eu como e (banho) eu tomo.",
-            points: [
-              "〜て liga ações em sequência.",
-              "食べる é verbo transitivo (come algo).",
-              "浴びる aqui funciona como verbo transitivo (シャワーを浴びる)."
-            ],
+            points: ["〜て liga ações em sequência.","食べる é transitivo.","浴びる (シャワーを浴びる) transitivo."],
             grammar: "Vて + Vます (sequência)",
             breakdown: [
               { jp:"朝ご飯", r:"あさごはん", m:"café da manhã", note:"substantivo" },
               { jp:"を", r:"を", m:"objeto", note:"partícula" },
               { jp:"食べて", r:"たべて", m:"comer (e...)", note:"Vて", vt:"他" },
-              { jp:"シャワー", r:"しゃわー", m:"banho (chuveiro)", note:"katakana" },
+              { jp:"シャワー", r:"しゃわー", m:"chuveiro", note:"katakana" },
               { jp:"を", r:"を", m:"objeto", note:"partícula" },
               { jp:"浴びます", r:"あびます", m:"tomo (banho)", note:"Vます", vt:"他" }
             ],
@@ -976,10 +926,7 @@
             pt: "Eu saio de casa às 7:30.",
             structure: "(hora)に + (lugar)を + 出ます",
             literal: "Às sete e meia, saio de casa.",
-            points: [
-              "家を出る = sair de casa (を = ponto de saída).",
-              "出る aqui funciona como verbo intransitivo (você sai)."
-            ],
+            points: ["家を出る = sair de casa (を = ponto de saída).","出る aqui é intransitivo."],
             grammar: "lugarを出る",
             breakdown: [
               { jp:"七時半", r:"しちじはん", m:"sete e meia", note:"hora" },
@@ -1001,12 +948,8 @@
             pt: "Eu vou a pé até a estação.",
             structure: "目的地まで + 歩いて + 行きます",
             literal: "Até a estação, indo a pé, vou.",
-            points: [
-              "まで = até (limite).",
-              "歩く é verbo intransitivo (andar).",
-              "行く é verbo intransitivo (ir)."
-            ],
-            grammar: "Vて + 行く (meio/ação)",
+            points: ["まで = até (limite).","歩く/行く = intransitivos."],
+            grammar: "Vて + 行く",
             breakdown: [
               { jp:"駅", r:"えき", m:"estação", note:"substantivo" },
               { jp:"まで", r:"まで", m:"até", note:"partícula" },
@@ -1026,7 +969,7 @@
             pt: "Eu vou para a escola de trem.",
             structure: "乗り物で + 場所に + 行きます",
             literal: "De trem, para a escola, vou.",
-            points: ["で = meio", "に = destino", "行く = verbo intransitivo"],
+            points: ["で = meio","に = destino","行く = intransitivo"],
             grammar: "で (meio) + に (destino)",
             breakdown: [
               { jp:"電車", r:"でんしゃ", m:"trem", note:"meio" },
@@ -1045,100 +988,366 @@
       },
 
       {
-        id: "n5_shopping",
-        level: "N5",
-        title: "買い物",
-        desc: "ほしい / ください / いくら / ありますか",
-        tags: ["店","買い物"],
+        id: "t_n5_conbini",
+        level: "TEXTOS",
+        title: "コンビニで",
+        desc: "pedido / pagamento / ありますか / ください",
+        tags: ["店","買い物","日常"],
         lines: [
           {
-            jp: "今日はスーパーで野菜を買います。",
-            jpRuby: "<ruby>今日<rt>きょう</rt></ruby>はスーパーで<ruby>野菜<rt>やさい</rt></ruby>を<ruby>買<rt>か</rt></ruby>います。",
-            reading: "きょうは すーぱーで やさいを かいます。",
-            pt: "Hoje eu compro legumes no supermercado.",
-            structure: "今日は + 場所で + Nを + 買います",
-            literal: "Quanto a hoje, no supermercado, legumes eu compro.",
-            points: ["で = local da ação", "買う = verbo transitivo (compra algo)."],
-            grammar: "場所で + Nを + Vます",
-            breakdown: [
-              { jp:"今日", r:"きょう", m:"hoje", note:"tempo" },
-              { jp:"は", r:"は", m:"tópico", note:"partícula" },
-              { jp:"スーパー", r:"すーぱー", m:"supermercado", note:"local" },
-              { jp:"で", r:"で", m:"em (local da ação)", note:"partícula" },
-              { jp:"野菜", r:"やさい", m:"legumes/verduras", note:"objeto" },
-              { jp:"を", r:"を", m:"objeto", note:"partícula" },
-              { jp:"買います", r:"かいます", m:"compro", note:"Vます", vt:"他" }
-            ],
-            vocab: [
-              { w:"野菜", r:"やさい", m:"legumes/verduras" },
-              { w:"買う", r:"かう", m:"comprar", vt:"他" },
-              { w:"スーパー", r:"すーぱー", m:"supermercado" }
-            ]
-          },
-          {
-            jp: "トマトを三つください。",
-            jpRuby: "トマトを<ruby>三<rt>みっ</rt></ruby>つください。",
-            reading: "とまとを みっつ ください。",
-            pt: "Por favor, me dê três tomates.",
-            structure: "Nを + 数 + ください",
-            literal: "Tomate (objeto) três, por favor dê.",
-            points: ["ください = pedido educado", "三つ = contagem genérica (1~10)."],
+            jp: "すみません、これをください。",
+            jpRuby: "すみません、これをください。",
+            reading: "すみません、これを ください。",
+            pt: "Com licença, este aqui por favor.",
+            structure: "すみません、これをください",
+            literal: "Com licença, por favor me dê isto.",
+            points: ["これ = isto (perto de mim).","ください = pedido educado."],
             grammar: "Nをください",
             breakdown: [
-              { jp:"トマト", r:"とまと", m:"tomate", note:"objeto" },
+              { jp:"すみません", r:"すみません", m:"com licença", note:"expressão" },
+              { jp:"これ", r:"これ", m:"isto", note:"pronome" },
               { jp:"を", r:"を", m:"objeto", note:"partícula" },
-              { jp:"三つ", r:"みっつ", m:"três (itens)", note:"contador" },
               { jp:"ください", r:"ください", m:"por favor, dê", note:"pedido", vt:"他" }
             ],
             vocab: [
-              { w:"ください", r:"ください", m:"por favor (dê)", vt:"他" },
-              { w:"三つ", r:"みっつ", m:"três (itens)" }
+              { w:"すみません", r:"すみません", m:"com licença / desculpe" },
+              { w:"ください", r:"ください", m:"por favor (dê)", vt:"他" }
             ]
           },
           {
-            jp: "これはいくらですか。",
-            jpRuby: "これはいくらですか。",
-            reading: "これは いくらですか。",
-            pt: "Quanto custa isto?",
-            structure: "これは + いくらですか",
-            literal: "Quanto é isto?",
-            points: ["いくら = quanto (preço)"],
+            jp: "温かいコーヒーがありますか。",
+            jpRuby: "<ruby>温<rt>あたた</rt></ruby>かいコーヒーがありますか。",
+            reading: "あたたかい こーひーが ありますか。",
+            pt: "Tem café quente?",
+            structure: "Adjい + Nがありますか",
+            literal: "Café quente existe?",
+            points: ["ありますか = existe/tem? (para coisas).","が = foco (o que está procurando)."],
+            grammar: "Nがありますか",
+            breakdown: [
+              { jp:"温かい", r:"あたたかい", m:"quente", note:"adj-i" },
+              { jp:"コーヒー", r:"こーひー", m:"café", note:"katakana" },
+              { jp:"が", r:"が", m:"foco", note:"partícula" },
+              { jp:"ありますか", r:"ありますか", m:"tem? existe?", note:"pergunta", vt:"自" }
+            ],
+            vocab: [
+              { w:"温かい", r:"あたたかい", m:"quente" },
+              { w:"コーヒー", r:"こーひー", m:"café" },
+              { w:"ある", r:"ある", m:"existir (coisa)", vt:"自" }
+            ]
+          },
+          {
+            jp: "いくらですか。",
+            jpRuby: "いくらですか。",
+            reading: "いくらですか。",
+            pt: "Quanto custa?",
+            structure: "いくらですか",
+            literal: "É quanto?",
+            points: ["Frase curta super comum no caixa."],
             grammar: "いくらですか",
             breakdown: [
-              { jp:"これ", r:"これ", m:"isto", note:"pronome" },
-              { jp:"は", r:"は", m:"tópico", note:"partícula" },
               { jp:"いくら", r:"いくら", m:"quanto (preço)", note:"interrogativo" },
               { jp:"ですか", r:"ですか", m:"é? (pergunta)", note:"cópula+Q" }
             ],
             vocab: [{ w:"いくら", r:"いくら", m:"quanto (preço)" }]
           },
           {
-            jp: "お金が足りません。",
-            jpRuby: "お<ruby>金<rt>かね</rt></ruby>が<ruby>足<rt>た</rt></ruby>りません。",
-            reading: "おかねが たりません。",
-            pt: "O dinheiro não é suficiente.",
-            structure: "Nが + 足りません",
-            literal: "Dinheiro (sujeito) não é suficiente.",
-            points: ["足りる = verbo intransitivo (ser suficiente)."],
-            grammar: "Nが足りる/足りない",
+            jp: "カードで払います。",
+            jpRuby: "カードで<ruby>払<rt>はら</rt></ruby>います。",
+            reading: "かーどで はらいます。",
+            pt: "Eu pago com cartão.",
+            structure: "Nで 払います",
+            literal: "Com cartão, pago.",
+            points: ["で = meio (pagamento).","払う = verbo comum no cotidiano."],
+            grammar: "NでVます (meio)",
             breakdown: [
-              { jp:"お金", r:"おかね", m:"dinheiro", note:"substantivo" },
-              { jp:"が", r:"が", m:"sujeito/foco", note:"partícula" },
-              { jp:"足りません", r:"たりません", m:"não é suficiente", note:"Vません", vt:"自" }
+              { jp:"カード", r:"かーど", m:"cartão", note:"meio" },
+              { jp:"で", r:"で", m:"com (meio)", note:"partícula" },
+              { jp:"払います", r:"はらいます", m:"pago", note:"Vます", vt:"他" }
             ],
             vocab: [
-              { w:"足りる", r:"たりる", m:"ser suficiente", vt:"自" },
-              { w:"お金", r:"おかね", m:"dinheiro" }
+              { w:"払う", r:"はらう", m:"pagar", vt:"他" },
+              { w:"カード", r:"かーど", m:"cartão" }
             ]
           }
         ]
       },
 
       {
-        id: "n5_weekend_plan",
-        level: "N5",
+        id: "t_n5_asking_directions",
+        level: "TEXTOS",
+        title: "道を聞く",
+        desc: "onde fica? / esquerda-direita / perto-longe",
+        tags: ["道","質問","日常"],
+        lines: [
+          {
+            jp: "すみません、駅はどこですか。",
+            jpRuby: "すみません、<ruby>駅<rt>えき</rt></ruby>はどこですか。",
+            reading: "すみません、えきは どこですか。",
+            pt: "Com licença, onde fica a estação?",
+            structure: "Nはどこですか",
+            literal: "Quanto à estação, onde é?",
+            points: ["どこ = onde","は = tópico (o lugar que você quer saber)."],
+            grammar: "Nはどこですか",
+            breakdown: [
+              { jp:"すみません", r:"すみません", m:"com licença", note:"expressão" },
+              { jp:"駅", r:"えき", m:"estação", note:"substantivo" },
+              { jp:"は", r:"は", m:"tópico", note:"partícula" },
+              { jp:"どこ", r:"どこ", m:"onde", note:"interrogativo" },
+              { jp:"ですか", r:"ですか", m:"é? (pergunta)", note:"cópula+Q" }
+            ],
+            vocab: [
+              { w:"駅", r:"えき", m:"estação" },
+              { w:"どこ", r:"どこ", m:"onde" }
+            ]
+          },
+          {
+            jp: "まっすぐ行って、右に曲がってください。",
+            jpRuby: "まっすぐ<ruby>行<rt>い</rt></ruby>って、<ruby>右<rt>みぎ</rt></ruby>に<ruby>曲<rt>ま</rt></ruby>がってください。",
+            reading: "まっすぐ いって、みぎに まがってください。",
+            pt: "Vá reto e vire à direita, por favor.",
+            structure: "Vて、右/左に Vてください",
+            literal: "Indo reto, por favor vire à direita.",
+            points: ["まっすぐ = reto","〜てください = pedido educado","曲がる = virar (intransitivo)."],
+            grammar: "Vて、Vてください",
+            breakdown: [
+              { jp:"まっすぐ", r:"まっすぐ", m:"reto", note:"advérbio" },
+              { jp:"行って", r:"いって", m:"vá (e...)", note:"Vて", vt:"自" },
+              { jp:"右", r:"みぎ", m:"direita", note:"direção" },
+              { jp:"に", r:"に", m:"para (direção)", note:"partícula" },
+              { jp:"曲がってください", r:"まがってください", m:"por favor vire", note:"Vてください", vt:"自" }
+            ],
+            vocab: [
+              { w:"右", r:"みぎ", m:"direita" },
+              { w:"曲がる", r:"まがる", m:"virar", vt:"自" },
+              { w:"まっすぐ", r:"まっすぐ", m:"reto" }
+            ]
+          },
+          {
+            jp: "駅はここから近いです。",
+            jpRuby: "<ruby>駅<rt>えき</rt></ruby>はここから<ruby>近<rt>ちか</rt></ruby>いです。",
+            reading: "えきは ここから ちかいです。",
+            pt: "A estação é perto daqui.",
+            structure: "Nは ここから Adjいです",
+            literal: "Quanto à estação, daqui é perto.",
+            points: ["ここから = a partir daqui","近い = adj-i."],
+            grammar: "ここから〜",
+            breakdown: [
+              { jp:"駅", r:"えき", m:"estação", note:"tópico" },
+              { jp:"は", r:"は", m:"tópico", note:"partícula" },
+              { jp:"ここ", r:"ここ", m:"aqui", note:"lugar" },
+              { jp:"から", r:"から", m:"de (origem)", note:"partícula" },
+              { jp:"近い", r:"ちかい", m:"perto", note:"adj-i" },
+              { jp:"です", r:"です", m:"(polido)", note:"cópula" }
+            ],
+            vocab: [
+              { w:"近い", r:"ちかい", m:"perto" },
+              { w:"ここ", r:"ここ", m:"aqui" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "t_n5_phone",
+        level: "TEXTOS",
+        title: "電話",
+        desc: "chamada / recado / いますか",
+        tags: ["電話","日常","人"],
+        lines: [
+          {
+            jp: "もしもし、田中さんはいますか。",
+            jpRuby: "もしもし、<ruby>田中<rt>たなか</rt></ruby>さんはいますか。",
+            reading: "もしもし、たなかさんは いますか。",
+            pt: "Alô, o Sr./Sra. Tanaka está?",
+            structure: "Nさんはいますか",
+            literal: "Quanto ao Tanaka, existe/está aí?",
+            points: ["もしもし = alô (telefone)","いる = existir (pessoa)."],
+            grammar: "Nはいますか",
+            breakdown: [
+              { jp:"もしもし", r:"もしもし", m:"alô", note:"telefone" },
+              { jp:"田中さん", r:"たなかさん", m:"Sr./Sra. Tanaka", note:"pessoa" },
+              { jp:"は", r:"は", m:"tópico", note:"partícula" },
+              { jp:"いますか", r:"いますか", m:"está? existe?", note:"pergunta", vt:"自" }
+            ],
+            vocab: [
+              { w:"いる", r:"いる", m:"existir (ser vivo)", vt:"自" }
+            ]
+          },
+          {
+            jp: "今、ちょっと忙しいです。",
+            jpRuby: "<ruby>今<rt>いま</rt></ruby>、ちょっと<ruby>忙<rt>いそが</rt></ruby>しいです。",
+            reading: "いま、ちょっと いそがしいです。",
+            pt: "Agora estou um pouco ocupado.",
+            structure: "今、ちょっと Adjいです",
+            literal: "Agora, um pouco ocupado.",
+            points: ["ちょっと = um pouco (bem comum em recusar/evitar)."],
+            grammar: "ちょっと〜",
+            breakdown: [
+              { jp:"今", r:"いま", m:"agora", note:"tempo" },
+              { jp:"ちょっと", r:"ちょっと", m:"um pouco", note:"advérbio" },
+              { jp:"忙しい", r:"いそがしい", m:"ocupado", note:"adj-i" },
+              { jp:"です", r:"です", m:"(polido)", note:"cópula" }
+            ],
+            vocab: [
+              { w:"今", r:"いま", m:"agora" },
+              { w:"忙しい", r:"いそがしい", m:"ocupado" }
+            ]
+          },
+          {
+            jp: "あとで電話します。",
+            jpRuby: "あとで<ruby>電話<rt>でんわ</rt></ruby>します。",
+            reading: "あとで でんわします。",
+            pt: "Eu ligo depois.",
+            structure: "あとで Nします",
+            literal: "Depois, faço (ligação).",
+            points: ["あとで = depois","電話する = ligar."],
+            grammar: "あとで + Vます",
+            breakdown: [
+              { jp:"あとで", r:"あとで", m:"depois", note:"tempo" },
+              { jp:"電話します", r:"でんわします", m:"ligo", note:"Vます", vt:"他" }
+            ],
+            vocab: [
+              { w:"電話", r:"でんわ", m:"telefone/ligação" },
+              { w:"あとで", r:"あとで", m:"depois" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "t_n5_home",
+        level: "TEXTOS",
+        title: "家で",
+        desc: "deveres / pedidos / proibições simples",
+        tags: ["家","日常"],
+        lines: [
+          {
+            jp: "ちょっと手伝ってください。",
+            jpRuby: "ちょっと<ruby>手伝<rt>てつだ</rt></ruby>ってください。",
+            reading: "ちょっと てつだってください。",
+            pt: "Por favor, me ajude um pouco.",
+            structure: "Vてください",
+            literal: "Ajude, por favor.",
+            points: ["手伝う = ajudar (transitivo)."],
+            grammar: "Vてください",
+            breakdown: [
+              { jp:"ちょっと", r:"ちょっと", m:"um pouco", note:"advérbio" },
+              { jp:"手伝ってください", r:"てつだってください", m:"por favor ajude", note:"Vてください", vt:"他" }
+            ],
+            vocab: [
+              { w:"手伝う", r:"てつだう", m:"ajudar", vt:"他" }
+            ]
+          },
+          {
+            jp: "ここでたばこを吸わないでください。",
+            jpRuby: "ここでたばこを<ruby>吸<rt>す</rt></ruby>わないでください。",
+            reading: "ここで たばこを すわないでください。",
+            pt: "Por favor, não fume aqui.",
+            structure: "Vないでください",
+            literal: "Por favor, não faça (fumar).",
+            points: ["Vないでください = pedido educado de NÃO fazer algo."],
+            grammar: "Vないでください",
+            breakdown: [
+              { jp:"ここ", r:"ここ", m:"aqui", note:"lugar" },
+              { jp:"で", r:"で", m:"em (local da ação)", note:"partícula" },
+              { jp:"たばこ", r:"たばこ", m:"cigarro", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"吸わないでください", r:"すわないでください", m:"por favor não fume", note:"Vないでください", vt:"他" }
+            ],
+            vocab: [
+              { w:"吸う", r:"すう", m:"fumar/inalar", vt:"他" }
+            ]
+          },
+          {
+            jp: "部屋をそうじしてから、テレビを見ます。",
+            jpRuby: "<ruby>部屋<rt>へや</rt></ruby>をそうじしてから、テレビを<ruby>見<rt>み</rt></ruby>ます。",
+            reading: "へやを そうじしてから、てれびを みます。",
+            pt: "Depois de limpar o quarto, eu assisto TV.",
+            structure: "Vてから、Vます",
+            literal: "Após (fazer), então (faço).",
+            points: ["〜てから = depois de fazer A, faz B."],
+            grammar: "Vてから",
+            breakdown: [
+              { jp:"部屋", r:"へや", m:"quarto/cômodo", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"そうじして", r:"そうじして", m:"limpar (depois de...)", note:"Vて", vt:"他" },
+              { jp:"から", r:"から", m:"depois de", note:"partícula" },
+              { jp:"テレビ", r:"てれび", m:"TV", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"見ます", r:"みます", m:"assisto", note:"Vます", vt:"他" }
+            ],
+            vocab: [
+              { w:"そうじする", r:"そうじする", m:"limpar", vt:"他" },
+              { w:"見る", r:"みる", m:"ver/assistir", vt:"他" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "t_n5_weather",
+        level: "TEXTOS",
+        title: "天気と服",
+        desc: "天気 / から / ので / 着る",
+        tags: ["天気","服"],
+        lines: [
+          {
+            jp: "今日は寒いので、コートを着ます。",
+            jpRuby: "<ruby>今日<rt>きょう</rt></ruby>は<ruby>寒<rt>さむ</rt></ruby>いので、コートを<ruby>着<rt>き</rt></ruby>ます。",
+            reading: "きょうは さむいので、こーとを きます。",
+            pt: "Como hoje está frio, eu visto um casaco.",
+            structure: "今日は Adjいので、Nを Vます",
+            literal: "Quanto a hoje, porque está frio, casaco eu visto.",
+            points: ["ので = porque/como (tom mais suave)", "着る = vestir (transitivo)."],
+            grammar: "ので (razão)",
+            breakdown: [
+              { jp:"今日", r:"きょう", m:"hoje", note:"tempo" },
+              { jp:"は", r:"は", m:"tópico", note:"partícula" },
+              { jp:"寒い", r:"さむい", m:"frio", note:"adj-i" },
+              { jp:"ので", r:"ので", m:"porque/como", note:"razão" },
+              { jp:"コート", r:"こーと", m:"casaco", note:"katakana" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"着ます", r:"きます", m:"visto", note:"Vます", vt:"他" }
+            ],
+            vocab: [
+              { w:"寒い", r:"さむい", m:"frio" },
+              { w:"着る", r:"きる", m:"vestir", vt:"他" },
+              { w:"コート", r:"こーと", m:"casaco" }
+            ]
+          },
+          {
+            jp: "雨が降るから、かさを持って行きます。",
+            jpRuby: "<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>るから、かさを<ruby>持<rt>も</rt></ruby>って<ruby>行<rt>い</rt></ruby>きます。",
+            reading: "あめが ふるから、かさを もって いきます。",
+            pt: "Como vai chover, eu levo guarda-chuva.",
+            structure: "V辞書形から、Nを持って行きます",
+            literal: "Porque vai chover, guarda-chuva eu levo.",
+            points: ["から = porque", "持って行く = levar (transitivo)."],
+            grammar: "から (razão)",
+            breakdown: [
+              { jp:"雨", r:"あめ", m:"chuva", note:"substantivo" },
+              { jp:"が", r:"が", m:"sujeito", note:"partícula" },
+              { jp:"降る", r:"ふる", m:"cair (chuva/neve)", note:"V辞書形", vt:"自" },
+              { jp:"から", r:"から", m:"porque", note:"razão" },
+              { jp:"かさ", r:"かさ", m:"guarda-chuva", note:"substantivo" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"持って行きます", r:"もっていきます", m:"levo", note:"Vます", vt:"他" }
+            ],
+            vocab: [
+              { w:"雨", r:"あめ", m:"chuva" },
+              { w:"降る", r:"ふる", m:"chover", vt:"自" },
+              { w:"かさ", r:"かさ", m:"guarda-chuva" },
+              { w:"持って行く", r:"もっていく", m:"levar", vt:"他" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "t_n5_weekend_plan",
+        level: "TEXTOS",
         title: "週末の予定",
-        desc: "〜たい / でも / から / いっしょに",
+        desc: "〜たい / でも / だから / いっしょに",
         tags: ["予定","週末"],
         lines: [
           {
@@ -1148,7 +1357,7 @@
             pt: "No fim de semana, quero ver um filme com um amigo.",
             structure: "週末に + 友だちと + 映画を + 見たいです",
             literal: "No fim de semana, com amigo, filme quero ver.",
-            points: ["〜たい = desejo do falante", "見る = verbo transitivo (ver algo)."],
+            points: ["〜たい = desejo do falante", "見る = transitivo (ver algo)."],
             grammar: "Vます + たいです",
             breakdown: [
               { jp:"週末", r:"しゅうまつ", m:"fim de semana", note:"tempo" },
@@ -1177,7 +1386,7 @@
             breakdown: [
               { jp:"でも", r:"でも", m:"mas", note:"conector" },
               { jp:"宿題", r:"しゅくだい", m:"lição de casa", note:"substantivo" },
-              { jp:"が", r:"が", m:"sujeito/foco", note:"partícula" },
+              { jp:"が", r:"が", m:"foco", note:"partícula" },
               { jp:"多い", r:"おおい", m:"muito", note:"adj-i" },
               { jp:"です", r:"です", m:"(forma educada)", note:"cópula" }
             ],
@@ -1190,7 +1399,7 @@
             pt: "Então, eu estudo na manhã de sábado.",
             structure: "だから + (tempo)に + 勉強します",
             literal: "Por isso, na manhã de sábado, estudo.",
-            points: ["だから = por isso", "勉強する = ação (marcado aqui como verbo transitivo)."],
+            points: ["だから = por isso", "勉強する = ação comum do dia a dia."],
             grammar: "だから + Vます",
             breakdown: [
               { jp:"だから", r:"だから", m:"por isso", note:"conector" },
@@ -1209,175 +1418,848 @@
       },
 
       {
-        id: "n4_moving_prep",
-        level: "N4",
-        title: "引っ越しの準備",
-        desc: "ことになった / そう / ので / ておく",
-        tags: ["生活","引っ越し"],
+        id: "t_n5_family",
+        level: "TEXTOS",
+        title: "私の家族",
+        desc: "家族 / 〜は〜です / で(ligação) / 上手",
+        tags: ["家族","日常"],
         lines: [
           {
-            jp: "来月、仕事の都合で引っ越すことになりました。",
-            jpRuby: "<ruby>来月<rt>らいげつ</rt></ruby>、<ruby>仕事<rt>しごと</rt></ruby>の<ruby>都合<rt>つごう</rt></ruby>で<ruby>引<rt>ひ</rt></ruby>っ<ruby>越<rt>こ</rt></ruby>すことになりました。",
-            reading: "らいげつ、しごとの つごうで ひっこす ことに なりました。",
-            pt: "No mês que vem, por causa do trabalho, ficou decidido que eu vou me mudar.",
-            structure: "来月、(理由)で + V辞書形 + ことになりました",
-            literal: "No mês que vem, por circunstâncias do trabalho, tornou-se decidido que vou me mudar.",
-            points: [
-              "〜ことになった = decisão definida por circunstância.",
-              "引っ越す = verbo intransitivo (mudar-se)."
-            ],
-            grammar: "N4: ことになった",
+            jp: "私の家族は四人です。",
+            jpRuby: "<ruby>私<rt>わたし</rt></ruby>の<ruby>家族<rt>かぞく</rt></ruby>は<ruby>四人<rt>よにん</rt></ruby>です。",
+            reading: "わたしの かぞくは よにんです。",
+            pt: "Minha família tem quatro pessoas.",
+            structure: "NのNは 数(にん) です",
+            literal: "Quanto à minha família, são quatro pessoas.",
+            points: ["の = posse/ligação", "は = tópico", "四人 = contador de pessoas"],
+            grammar: "NのNは〜です / 人(にん)",
             breakdown: [
-              { jp:"来月", r:"らいげつ", m:"mês que vem", note:"tempo" },
-              { jp:"仕事", r:"しごと", m:"trabalho", note:"substantivo" },
-              { jp:"都合", r:"つごう", m:"circunstância", note:"razão" },
-              { jp:"で", r:"で", m:"por causa de", note:"partícula" },
-              { jp:"引っ越す", r:"ひっこす", m:"mudar-se", note:"V辞書形", vt:"自" },
-              { jp:"ことになりました", r:"ことになりました", m:"ficou decidido", note:"padrão" }
+              { jp:"私", r:"わたし", m:"eu", note:"pronome" },
+              { jp:"の", r:"の", m:"de / meu", note:"partícula" },
+              { jp:"家族", r:"かぞく", m:"família", note:"substantivo" },
+              { jp:"は", r:"は", m:"tópico", note:"partícula" },
+              { jp:"四人", r:"よにん", m:"quatro pessoas", note:"contador" },
+              { jp:"です", r:"です", m:"é/são", note:"cópula" }
             ],
             vocab: [
-              { w:"都合", r:"つごう", m:"circunstância / conveniência" },
-              { w:"引っ越す", r:"ひっこす", m:"mudar-se", vt:"自" }
+              { w:"家族", r:"かぞく", m:"família" },
+              { w:"四人", r:"よにん", m:"quatro pessoas" }
             ]
           },
           {
-            jp: "ダンボールは足りなくなりそうなので、多めに買っておきました。",
-            jpRuby: "ダンボールは<ruby>足<rt>た</rt></ruby>りなくなりそうなので、<ruby>多<rt>おお</rt></ruby>めに<ruby>買<rt>か</rt></ruby>っておきました。",
-            reading: "だんぼーるは たりなく なりそうなので、おおめに かっておきました。",
-            pt: "Como parece que vai faltar caixa de papelão, comprei a mais com antecedência.",
-            structure: "Nは Vなくなりそうなので、(quantidade)に Vておきました",
-            literal: "Quanto às caixas, como parece que vão ficar insuficientes, comprei um pouco a mais e deixei preparado.",
-            points: [
-              "足りる = verbo intransitivo (ser suficiente).",
-              "買う = verbo transitivo (comprar algo).",
-              "〜ておく = preparar/adiantar."
-            ],
-            grammar: "N4: そう + ので + ておく",
+            jp: "父は会社員で、毎日忙しいです。",
+            jpRuby: "<ruby>父<rt>ちち</rt></ruby>は<ruby>会社員<rt>かいしゃいん</rt></ruby>で、<ruby>毎日<rt>まいにち</rt></ruby><ruby>忙<rt>いそが</rt></ruby>しいです。",
+            reading: "ちちは かいしゃいんで、まいにち いそがしいです。",
+            pt: "Meu pai é funcionário de empresa e está ocupado todos os dias.",
+            structure: "Nは Nで、(tempo) Adjいです",
+            literal: "Quanto ao pai, sendo funcionário, todo dia é ocupado.",
+            points: ["Nで liga frases (forma de です).", "忙しい = adj-i."],
+            grammar: "Nで、〜 / Adjいです",
             breakdown: [
-              { jp:"足りなくなりそう", r:"たりなくなりそう", m:"parece que vai faltar", note:"mudança + そう", vt:"自" },
-              { jp:"多めに", r:"おおめに", m:"um pouco a mais", note:"quantidade" },
-              { jp:"買っておきました", r:"かっておきました", m:"comprei antecipadamente", note:"Vておく", vt:"他" }
+              { jp:"父", r:"ちち", m:"pai (meu)", note:"família" },
+              { jp:"は", r:"は", m:"tópico", note:"partícula" },
+              { jp:"会社員", r:"かいしゃいん", m:"funcionário de empresa", note:"substantivo" },
+              { jp:"で", r:"で", m:"e / sendo", note:"ligação (です)" },
+              { jp:"毎日", r:"まいにち", m:"todo dia", note:"tempo" },
+              { jp:"忙しい", r:"いそがしい", m:"ocupado", note:"adj-i" },
+              { jp:"です", r:"です", m:"(forma educada)", note:"cópula" }
             ],
             vocab: [
-              { w:"足りる", r:"たりる", m:"ser suficiente", vt:"自" },
-              { w:"買う", r:"かう", m:"comprar", vt:"他" },
-              { w:"買っておく", r:"かっておく", m:"comprar antecipadamente", vt:"他" }
+              { w:"会社員", r:"かいしゃいん", m:"funcionário de empresa" },
+              { w:"忙しい", r:"いそがしい", m:"ocupado" }
+            ]
+          },
+          {
+            jp: "母は料理が上手です。",
+            jpRuby: "<ruby>母<rt>はは</rt></ruby>は<ruby>料理<rt>りょうり</rt></ruby>が<ruby>上手<rt>じょうず</rt></ruby>です。",
+            reading: "ははは りょうりが じょうずです。",
+            pt: "Minha mãe é boa em cozinhar.",
+            structure: "Nは Nが 上手です",
+            literal: "Quanto à mãe, culinária é habilidosa.",
+            points: ["Nが上手です = ser bom em N."],
+            grammar: "Nが上手です",
+            breakdown: [
+              { jp:"母", r:"はは", m:"mãe (minha)", note:"família" },
+              { jp:"は", r:"は", m:"tópico", note:"partícula" },
+              { jp:"料理", r:"りょうり", m:"culinária/cozinhar", note:"substantivo" },
+              { jp:"が", r:"が", m:"foco", note:"partícula" },
+              { jp:"上手", r:"じょうず", m:"bom/habilidoso", note:"na-adj" },
+              { jp:"です", r:"です", m:"(forma educada)", note:"cópula" }
+            ],
+            vocab: [
+              { w:"料理", r:"りょうり", m:"cozinhar" },
+              { w:"上手", r:"じょうず", m:"bom/habilidoso" }
             ]
           }
         ]
       },
 
       {
-        id: "n4_parttime_study",
-        level: "N4",
-        title: "アルバイトと勉強",
-        desc: "ように / ために / しか / でも",
-        tags: ["勉強","生活"],
+        id: "t_n5_restaurant",
+        level: "TEXTOS",
+        title: "レストランで",
+        desc: "注文 / 〜をください / 〜が好き / 辛い",
+        tags: ["食べ物","店"],
         lines: [
           {
-            jp: "日本語が上手になるために、毎日少しずつ練習しています。",
-            jpRuby: "<ruby>日本語<rt>にほんご</rt></ruby>が<ruby>上手<rt>じょうず</rt></ruby>になるために、<ruby>毎日<rt>まいにち</rt></ruby><ruby>少<rt>すこ</rt></ruby>しずつ<ruby>練習<rt>れんしゅう</rt></ruby>しています。",
-            reading: "にほんごが じょうずに なるために、まいにち すこしずつ れんしゅうしています。",
-            pt: "Para ficar bom em japonês, eu treino um pouco todos os dias.",
-            structure: "上手になるために、毎日 少しずつ 練習しています",
-            literal: "Para se tornar bom, todos os dias aos poucos estou praticando.",
-            points: [
-              "〜ために = para (objetivo).",
-              "なる = verbo intransitivo (tornar-se).",
-              "練習する = ação (marcado aqui como verbo transitivo)."
-            ],
-            grammar: "N4: ために (objetivo)",
+            jp: "すみません、水をください。",
+            jpRuby: "すみません、<ruby>水<rt>みず</rt></ruby>をください。",
+            reading: "すみません、みずを ください。",
+            pt: "Com licença, água por favor.",
+            structure: "すみません、Nをください",
+            literal: "Com licença, por favor me dê água.",
+            points: ["すみません = chamar/ pedir licença", "ください = pedido educado"],
+            grammar: "Nをください",
             breakdown: [
-              { jp:"上手になる", r:"じょうずになる", m:"ficar bom (tornar-se)", note:"padrão", vt:"自" },
-              { jp:"ために", r:"ために", m:"para (objetivo)", note:"conector" },
-              { jp:"練習しています", r:"れんしゅうしています", m:"estou praticando", note:"Vている", vt:"他" }
+              { jp:"すみません", r:"すみません", m:"com licença", note:"expressão" },
+              { jp:"水", r:"みず", m:"água", note:"substantivo" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"ください", r:"ください", m:"por favor, dê", note:"pedido", vt:"他" }
             ],
             vocab: [
-              { w:"なる", r:"なる", m:"tornar-se", vt:"自" },
-              { w:"練習する", r:"れんしゅうする", m:"praticar", vt:"他" },
-              { w:"少しずつ", r:"すこしずつ", m:"aos poucos" }
+              { w:"水", r:"みず", m:"água" },
+              { w:"ください", r:"ください", m:"por favor (dê)", vt:"他" }
             ]
           },
           {
-            jp: "忘れないように、新しい単語をノートに書いています。",
-            jpRuby: "<ruby>忘<rt>わす</rt></ruby>れないように、<ruby>新<rt>あたら</rt></ruby>しい<ruby>単語<rt>たんご</rt></ruby>をノートに<ruby>書<rt>か</rt></ruby>いています。",
-            reading: "わすれないように、あたらしい たんごを のーとに かいています。",
-            pt: "Para não esquecer, eu escrevo as palavras novas no caderno.",
-            structure: "忘れないように、NをNに書いています",
-            literal: "Para não esquecer, palavras novas no caderno estou escrevendo.",
-            points: ["〜ように = para (evitar/objetivo)", "書く = verbo transitivo (escrever algo)."],
-            grammar: "N4: ように (evitar/objetivo)",
+            jp: "私は魚が好きです。",
+            jpRuby: "<ruby>私<rt>わたし</rt></ruby>は<ruby>魚<rt>さかな</rt></ruby>が<ruby>好<rt>す</rt></ruby>きです。",
+            reading: "わたしは さかなが すきです。",
+            pt: "Eu gosto de peixe.",
+            structure: "Nは Nが 好きです",
+            literal: "Quanto a mim, peixe é agradável.",
+            points: ["好き = na-adj", "が = foco do gosto"],
+            grammar: "Nが好きです",
             breakdown: [
-              { jp:"忘れない", r:"わすれない", m:"não esquecer", note:"negação", vt:"他" },
-              { jp:"ように", r:"ように", m:"para (evitar)", note:"padrão" },
-              { jp:"単語を", r:"たんごを", m:"palavras (objeto)", note:"を" },
-              { jp:"ノートに", r:"のーとに", m:"no caderno", note:"に" },
-              { jp:"書いています", r:"かいています", m:"estou escrevendo", note:"Vている", vt:"他" }
+              { jp:"私", r:"わたし", m:"eu", note:"pronome" },
+              { jp:"は", r:"は", m:"tópico", note:"partícula" },
+              { jp:"魚", r:"さかな", m:"peixe", note:"substantivo" },
+              { jp:"が", r:"が", m:"foco", note:"partícula" },
+              { jp:"好き", r:"すき", m:"gostar", note:"na-adj" },
+              { jp:"です", r:"です", m:"(forma educada)", note:"cópula" }
             ],
             vocab: [
-              { w:"忘れる", r:"わすれる", m:"esquecer", vt:"他" },
-              { w:"書く", r:"かく", m:"escrever", vt:"他" },
-              { w:"単語", r:"たんご", m:"palavra (vocabulário)" }
+              { w:"魚", r:"さかな", m:"peixe" },
+              { w:"好き", r:"すき", m:"gostar" }
+            ]
+          },
+          {
+            jp: "このカレーは辛いですか。",
+            jpRuby: "このカレーは<ruby>辛<rt>から</rt></ruby>いですか。",
+            reading: "このかれーは からいですか。",
+            pt: "Esse curry é apimentado?",
+            structure: "このNは Adjいですか",
+            literal: "Este curry é apimentado?",
+            points: ["この = este/essa", "辛い = adj-i"],
+            grammar: "Adjいですか",
+            breakdown: [
+              { jp:"この", r:"この", m:"este/essa", note:"determinante" },
+              { jp:"カレー", r:"かれー", m:"curry", note:"katakana" },
+              { jp:"は", r:"は", m:"tópico", note:"partícula" },
+              { jp:"辛い", r:"からい", m:"apimentado", note:"adj-i" },
+              { jp:"ですか", r:"ですか", m:"é? (pergunta)", note:"cópula+Q" }
+            ],
+            vocab: [
+              { w:"辛い", r:"からい", m:"apimentado" }
+            ]
+          }
+        ]
+      },
+
+      /* ===========================
+         ESTRUTURAS N5 (bem usadas)
+         =========================== */
+
+      {
+        id: "g_n5_wa_ga",
+        level: "ESTRUTURAS",
+        title: "は vs が",
+        desc: "tópico vs foco (muito usado)",
+        tags: ["partículas","tópico","foco"],
+        lines: [
+          {
+            jp: "私は学生です。",
+            jpRuby: "<ruby>私<rt>わたし</rt></ruby>は<ruby>学生<rt>がくせい</rt></ruby>です。",
+            reading: "わたしは がくせいです。",
+            pt: "Eu sou estudante.",
+            structure: "Nは Nです",
+            literal: "Quanto a mim, (sou) estudante.",
+            points: [
+              "は = TÓPICO (sobre o que você vai falar).",
+              "Frase-base N5 para se identificar."
+            ],
+            grammar: "Nは Nです",
+            breakdown: [
+              { jp:"私", r:"わたし", m:"eu", note:"tópico" },
+              { jp:"は", r:"は", m:"marca tópico", note:"partícula" },
+              { jp:"学生", r:"がくせい", m:"estudante", note:"substantivo" },
+              { jp:"です", r:"です", m:"ser/estar (polido)", note:"cópula" }
+            ],
+            vocab: [
+              { w:"学生", r:"がくせい", m:"estudante" }
+            ]
+          },
+          {
+            jp: "だれが来ますか。",
+            jpRuby: "だれが<ruby>来<rt>き</rt></ruby>ますか。",
+            reading: "だれが きますか。",
+            pt: "Quem vem?",
+            structure: "だれが Vますか",
+            literal: "Quem (é que) vem?",
+            points: [
+              "Perguntas com だれ/なに: geralmente usa が.",
+              "Você quer o sujeito específico."
+            ],
+            grammar: "疑問語 + が",
+            breakdown: [
+              { jp:"だれ", r:"だれ", m:"quem", note:"interrogativo" },
+              { jp:"が", r:"が", m:"foco/sujeito", note:"partícula" },
+              { jp:"来ます", r:"きます", m:"vem", note:"Vます", vt:"自" },
+              { jp:"か", r:"か", m:"pergunta", note:"partícula" }
+            ],
+            vocab: [
+              { w:"来る", r:"くる", m:"vir", vt:"自" }
+            ]
+          },
+
+          /* +++ ADICIONADO: variação de contexto/tempo verbal +++ */
+          {
+            jp: "今日は雨です。",
+            jpRuby: "<ruby>今日<rt>きょう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>です。",
+            reading: "きょうは あめです。",
+            pt: "Hoje está chovendo / Hoje é dia de chuva.",
+            structure: "今日は Nです",
+            literal: "Quanto a hoje, é chuva.",
+            points: [
+              "は = define o tema do momento (hoje).",
+              "Frase super comum pra falar do dia/tempo."
+            ],
+            grammar: "NはNです（話題提示）",
+            breakdown: [
+              { jp:"今日", r:"きょう", m:"hoje", note:"tempo" },
+              { jp:"は", r:"は", m:"tópico", note:"partícula" },
+              { jp:"雨", r:"あめ", m:"chuva", note:"substantivo" },
+              { jp:"です", r:"です", m:"é/está (polido)", note:"cópula" }
+            ],
+            vocab: [
+              { w:"今日", r:"きょう", m:"hoje" },
+              { w:"雨", r:"あめ", m:"chuva" }
             ]
           }
         ]
       },
 
       {
-        id: "n4_health_habit",
-        level: "N4",
-        title: "健康のために",
-        desc: "ようにする / すぎる / ほうがいい",
-        tags: ["健康","習慣"],
+        id: "g_n5_o_ni_de",
+        level: "ESTRUTURAS",
+        title: "を / に / で",
+        desc: "objeto / destino / local da ação (top 1 do N5)",
+        tags: ["partículas","básico"],
         lines: [
           {
-            jp: "健康のために、夜はあまり甘い物を食べないようにしています。",
-            jpRuby: "<ruby>健康<rt>けんこう</rt></ruby>のために、<ruby>夜<rt>よる</rt></ruby>はあまり<ruby>甘<rt>あま</rt></ruby>い<ruby>物<rt>もの</rt></ruby>を<ruby>食<rt>た</rt></ruby>べないようにしています。",
-            reading: "けんこうのために、よるは あまり あまいものを たべないようにしています。",
-            pt: "Pela saúde, à noite eu tento não comer muitas coisas doces.",
-            structure: "健康のために、夜は Nを Vないようにしています",
-            literal: "Para a saúde, à noite, coisas doces eu tento não comer.",
-            points: ["〜ようにしている = hábito/tentativa", "食べる = verbo transitivo (comer algo)."],
-            grammar: "N4: Vないようにしている",
+            jp: "パンを食べます。",
+            jpRuby: "パンを<ruby>食<rt>た</rt></ruby>べます。",
+            reading: "ぱんを たべます。",
+            pt: "Eu como pão.",
+            structure: "Nを Vます",
+            literal: "Pão (objeto) eu como.",
+            points: ["を = objeto direto (o que recebe a ação)."],
+            grammar: "を (objeto)",
             breakdown: [
-              { jp:"健康のために", r:"けんこうのために", m:"pela saúde / para a saúde", note:"objetivo" },
-              { jp:"夜は", r:"よるは", m:"à noite (tópico)", note:"は" },
-              { jp:"甘い物を", r:"あまいものを", m:"doces (objeto)", note:"を" },
-              { jp:"食べないようにしています", r:"たべないようにしています", m:"tento não comer", note:"padrão", vt:"他" }
+              { jp:"パン", r:"ぱん", m:"pão", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"食べます", r:"たべます", m:"como", note:"Vます", vt:"他" }
             ],
             vocab: [
-              { w:"健康", r:"けんこう", m:"saúde" },
+              { w:"食べる", r:"たべる", m:"comer", vt:"他" }
+            ]
+          },
+          {
+            jp: "学校に行きます。",
+            jpRuby: "<ruby>学校<rt>がっこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>きます。",
+            reading: "がっこうに いきます。",
+            pt: "Eu vou para a escola.",
+            structure: "場所に 行きます",
+            literal: "Para a escola, vou.",
+            points: ["に = destino (ir/vir/voltar/chegar)."],
+            grammar: "に (destino)",
+            breakdown: [
+              { jp:"学校", r:"がっこう", m:"escola", note:"destino" },
+              { jp:"に", r:"に", m:"para (destino)", note:"partícula" },
+              { jp:"行きます", r:"いきます", m:"vou", note:"Vます", vt:"自" }
+            ],
+            vocab: [
+              { w:"学校", r:"がっこう", m:"escola" },
+              { w:"行く", r:"いく", m:"ir", vt:"自" }
+            ]
+          },
+          {
+            jp: "図書館で勉強します。",
+            jpRuby: "<ruby>図書館<rt>としょかん</rt></ruby>で<ruby>勉強<rt>べんきょう</rt></ruby>します。",
+            reading: "としょかんで べんきょうします。",
+            pt: "Eu estudo na biblioteca.",
+            structure: "場所で Vます",
+            literal: "Na biblioteca, estudo.",
+            points: ["で = local ONDE a ação acontece."],
+            grammar: "で (local da ação)",
+            breakdown: [
+              { jp:"図書館", r:"としょかん", m:"biblioteca", note:"local" },
+              { jp:"で", r:"で", m:"em (local da ação)", note:"partícula" },
+              { jp:"勉強します", r:"べんきょうします", m:"estudo", note:"Vます", vt:"他" }
+            ],
+            vocab: [
+              { w:"図書館", r:"としょかん", m:"biblioteca" },
+              { w:"勉強する", r:"べんきょうする", m:"estudar", vt:"他" }
+            ]
+          },
+
+          /* +++ ADICIONADO: で (meio/idioma) +++ */
+          {
+            jp: "日本語で話します。",
+            jpRuby: "<ruby>日本語<rt>にほんご</rt></ruby>で<ruby>話<rt>はな</rt></ruby>します。",
+            reading: "にほんごで はなします。",
+            pt: "Eu falo em japonês.",
+            structure: "Nで Vます",
+            literal: "Em japonês, falo.",
+            points: ["で também marca MEIO (idioma/ferramenta).","Frase bem comum em sala de aula."],
+            grammar: "で (meio/idioma)",
+            breakdown: [
+              { jp:"日本語", r:"にほんご", m:"japonês (idioma)", note:"meio" },
+              { jp:"で", r:"で", m:"em / com (meio)", note:"partícula" },
+              { jp:"話します", r:"はなします", m:"falo", note:"Vます", vt:"他" }
+            ],
+            vocab: [
+              { w:"日本語", r:"にほんご", m:"japonês (idioma)" },
+              { w:"話す", r:"はなす", m:"falar", vt:"他" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "g_n5_te_sequence",
+        level: "ESTRUTURAS",
+        title: "〜て (sequência)",
+        desc: "fazer A e depois B (comum no dia a dia)",
+        tags: ["て形","sequência"],
+        lines: [
+          {
+            jp: "朝ご飯を食べて、学校に行きます。",
+            jpRuby: "<ruby>朝<rt>あさ</rt></ruby>ご<ruby>飯<rt>はん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べて、<ruby>学校<rt>がっこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>きます。",
+            reading: "あさごはんを たべて、がっこうに いきます。",
+            pt: "Eu tomo café da manhã e vou para a escola.",
+            structure: "Vて、Vます",
+            literal: "Comer café e ir à escola.",
+            points: ["〜て conecta ações em ordem (A→B)."],
+            grammar: "Vて、Vます",
+            breakdown: [
+              { jp:"朝ご飯", r:"あさごはん", m:"café da manhã", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"食べて", r:"たべて", m:"comer (e...)", note:"Vて", vt:"他" },
+              { jp:"学校", r:"がっこう", m:"escola", note:"destino" },
+              { jp:"に", r:"に", m:"para", note:"partícula" },
+              { jp:"行きます", r:"いきます", m:"vou", note:"Vます", vt:"自" }
+            ],
+            vocab: [
               { w:"食べる", r:"たべる", m:"comer", vt:"他" },
-              { w:"ようにしている", r:"ようにしている", m:"tentar/habituar-se a" }
+              { w:"行く", r:"いく", m:"ir", vt:"自" }
+            ]
+          },
+
+          /* +++ ADICIONADO: rotina (voltar e estudar) +++ */
+          {
+            jp: "家に帰って、宿題をします。",
+            jpRuby: "<ruby>家<rt>いえ</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>って、<ruby>宿題<rt>しゅくだい</rt></ruby>をします。",
+            reading: "いえに かえって、しゅくだいを します。",
+            pt: "Eu volto para casa e faço a lição de casa.",
+            structure: "Vて、Vます",
+            literal: "Voltando para casa, faço a lição.",
+            points: ["〜て = sequência natural do dia a dia.","帰る = intransitivo / する = ‘fazer’."],
+            grammar: "Vて、Vます (順番)",
+            breakdown: [
+              { jp:"家", r:"いえ", m:"casa", note:"destino" },
+              { jp:"に", r:"に", m:"para (destino)", note:"partícula" },
+              { jp:"帰って", r:"かえって", m:"voltar (e...)", note:"Vて", vt:"自" },
+              { jp:"宿題", r:"しゅくだい", m:"lição de casa", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"します", r:"します", m:"faço", note:"Vます", vt:"他" }
+            ],
+            vocab: [
+              { w:"帰る", r:"かえる", m:"voltar", vt:"自" },
+              { w:"宿題", r:"しゅくだい", m:"lição de casa" },
+              { w:"する", r:"する", m:"fazer", vt:"他" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "g_n5_te_kudasai",
+        level: "ESTRUTURAS",
+        title: "〜てください",
+        desc: "pedido educado (por favor faça…)",
+        tags: ["pedido","て形"],
+        lines: [
+          {
+            jp: "ゆっくり話してください。",
+            jpRuby: "ゆっくり<ruby>話<rt>はな</rt></ruby>してください。",
+            reading: "ゆっくり はなしてください。",
+            pt: "Por favor, fale devagar.",
+            structure: "Vてください",
+            literal: "Faça (falar) devagar, por favor.",
+            points: ["Forma super usada para pedir algo educadamente."],
+            grammar: "Vてください",
+            breakdown: [
+              { jp:"ゆっくり", r:"ゆっくり", m:"devagar", note:"advérbio" },
+              { jp:"話してください", r:"はなしてください", m:"por favor fale", note:"Vてください", vt:"他" }
+            ],
+            vocab: [
+              { w:"話す", r:"はなす", m:"falar", vt:"他" }
+            ]
+          },
+
+          /* +++ ADICIONADO: repetir (pedido) +++ */
+          {
+            jp: "もう一度言ってください。",
+            jpRuby: "もう<ruby>一度<rt>いちど</rt></ruby><ruby>言<rt>い</rt></ruby>ってください。",
+            reading: "もういちど いってください。",
+            pt: "Por favor, diga mais uma vez.",
+            structure: "もう一度 + Vてください",
+            literal: "Mais uma vez, diga por favor.",
+            points: ["Muito comum em aula e conversa.","もう一度 = ‘de novo’ (educado)."],
+            grammar: "副詞 + Vてください",
+            breakdown: [
+              { jp:"もう一度", r:"もういちど", m:"mais uma vez", note:"advérbio" },
+              { jp:"言ってください", r:"いってください", m:"por favor diga", note:"Vてください", vt:"他" }
+            ],
+            vocab: [
+              { w:"一度", r:"いちど", m:"uma vez" },
+              { w:"言う", r:"いう", m:"dizer", vt:"他" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "g_n5_nai_de_kudasai",
+        level: "ESTRUTURAS",
+        title: "〜ないでください",
+        desc: "pedido educado: por favor NÃO faça…",
+        tags: ["proibição","ないでください"],
+        lines: [
+          {
+            jp: "ここで写真を撮らないでください。",
+            jpRuby: "ここで<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>らないでください。",
+            reading: "ここで しゃしんを とらないでください。",
+            pt: "Por favor, não tire foto aqui.",
+            structure: "Vないでください",
+            literal: "Por favor, não faça (tirar foto).",
+            points: ["Muito comum em placas/regras e pedidos educados."],
+            grammar: "Vないでください",
+            breakdown: [
+              { jp:"ここ", r:"ここ", m:"aqui", note:"lugar" },
+              { jp:"で", r:"で", m:"em (local da ação)", note:"partícula" },
+              { jp:"写真", r:"しゃしん", m:"foto", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"撮らないでください", r:"とらないでください", m:"por favor não tire", note:"Vないでください", vt:"他" }
+            ],
+            vocab: [
+              { w:"写真", r:"しゃしん", m:"foto" },
+              { w:"撮る", r:"とる", m:"tirar (foto)", vt:"他" }
+            ]
+          },
+
+          /* +++ ADICIONADO: proibição comum (comer aqui) +++ */
+          {
+            jp: "ここで食べないでください。",
+            jpRuby: "ここで<ruby>食<rt>た</rt></ruby>べないでください。",
+            reading: "ここで たべないでください。",
+            pt: "Por favor, não coma aqui.",
+            structure: "Vないでください",
+            literal: "Por favor, não faça (comer).",
+            points: ["Mesmo padrão: local で + Vないでください.","Muito usado em avisos."],
+            grammar: "場所でVないでください",
+            breakdown: [
+              { jp:"ここ", r:"ここ", m:"aqui", note:"lugar" },
+              { jp:"で", r:"で", m:"em (local da ação)", note:"partícula" },
+              { jp:"食べないでください", r:"たべないでください", m:"por favor não coma", note:"Vないでください", vt:"他" }
+            ],
+            vocab: [
+              { w:"食べる", r:"たべる", m:"comer", vt:"他" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "g_n5_tai",
+        level: "ESTRUTURAS",
+        title: "〜たいです",
+        desc: "desejo do falante (quero fazer…)",
+        tags: ["desejo","たい"],
+        lines: [
+          {
+            jp: "日本語を勉強したいです。",
+            jpRuby: "<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>したいです。",
+            reading: "にほんごを べんきょうしたいです。",
+            pt: "Eu quero estudar japonês.",
+            structure: "Vます + たいです",
+            literal: "Quero estudar japonês.",
+            points: ["たい = desejo (muito usado em conversa)."],
+            grammar: "Vます + たいです",
+            breakdown: [
+              { jp:"日本語", r:"にほんご", m:"japonês (idioma)", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"勉強したいです", r:"べんきょうしたいです", m:"quero estudar", note:"Vたい", vt:"他" }
+            ],
+            vocab: [
+              { w:"日本語", r:"にほんご", m:"japonês (idioma)" },
+              { w:"勉強する", r:"べんきょうする", m:"estudar", vt:"他" }
+            ]
+          },
+
+          /* +++ ADICIONADO: desejo com verbo intransitivo +++ */
+          {
+            jp: "今日は早く帰りたいです。",
+            jpRuby: "<ruby>今日<rt>きょう</rt></ruby>は<ruby>早<rt>はや</rt></ruby>く<ruby>帰<rt>かえ</rt></ruby>りたいです。",
+            reading: "きょうは はやく かえりたいです。",
+            pt: "Hoje eu quero voltar para casa cedo.",
+            structure: "今日は + 早く + Vたいです",
+            literal: "Quanto a hoje, cedo quero voltar.",
+            points: ["たい pode vir com verbos intransitivos também.","早く = ‘cedo/rápido’ (advérbio)."],
+            grammar: "Vます + たいです（願望）",
+            breakdown: [
+              { jp:"今日", r:"きょう", m:"hoje", note:"tempo" },
+              { jp:"は", r:"は", m:"tópico", note:"partícula" },
+              { jp:"早く", r:"はやく", m:"cedo", note:"advérbio" },
+              { jp:"帰りたいです", r:"かえりたいです", m:"quero voltar", note:"Vたい", vt:"自" }
+            ],
+            vocab: [
+              { w:"早く", r:"はやく", m:"cedo/rápido" },
+              { w:"帰る", r:"かえる", m:"voltar", vt:"自" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "g_n5_arimasu_imasu",
+        level: "ESTRUTURAS",
+        title: "あります / います",
+        desc: "existir/ter (coisas) vs (pessoas/animais)",
+        tags: ["existência","いる/ある"],
+        lines: [
+          {
+            jp: "部屋に猫がいます。",
+            jpRuby: "<ruby>部屋<rt>へや</rt></ruby>に<ruby>猫<rt>ねこ</rt></ruby>がいます。",
+            reading: "へやに ねこが います。",
+            pt: "Há um gato no quarto.",
+            structure: "場所に Nが います",
+            literal: "No quarto, gato existe.",
+            points: ["いる = existir (ser vivo).", "に = local de existência."],
+            grammar: "場所にNがいる",
+            breakdown: [
+              { jp:"部屋", r:"へや", m:"quarto", note:"lugar" },
+              { jp:"に", r:"に", m:"em (existência)", note:"partícula" },
+              { jp:"猫", r:"ねこ", m:"gato", note:"ser vivo" },
+              { jp:"が", r:"が", m:"sujeito", note:"partícula" },
+              { jp:"います", r:"います", m:"há/existe", note:"Vます", vt:"自" }
+            ],
+            vocab: [
+              { w:"猫", r:"ねこ", m:"gato" },
+              { w:"いる", r:"いる", m:"existir (ser vivo)", vt:"自" }
             ]
           },
           {
-            jp: "運動は毎日したほうがいいと思います。",
-            jpRuby: "<ruby>運動<rt>うんどう</rt></ruby>は<ruby>毎日<rt>まいにち</rt></ruby>したほうがいいと<ruby>思<rt>おも</rt></ruby>います。",
-            reading: "うんどうは まいにち したほうがいいと おもいます。",
-            pt: "Eu acho que é melhor fazer exercício todos os dias.",
-            structure: "Nは Vたほうがいいと思います",
-            literal: "Quanto a exercício, acho que é melhor fazer.",
-            points: ["〜たほうがいい = recomendação", "思う = verbo transitivo (achar algo)."],
-            grammar: "N4: Vたほうがいい",
+            jp: "机の上に本があります。",
+            jpRuby: "<ruby>机<rt>つくえ</rt></ruby>の<ruby>上<rt>うえ</rt></ruby>に<ruby>本<rt>ほん</rt></ruby>があります。",
+            reading: "つくえの うえに ほんが あります。",
+            pt: "Há um livro em cima da mesa.",
+            structure: "場所に Nが あります",
+            literal: "Em cima da mesa, livro existe.",
+            points: ["ある = existir (coisa).", "の上 = em cima de."],
+            grammar: "場所にNがある",
             breakdown: [
-              { jp:"運動", r:"うんどう", m:"exercício", note:"tópico" },
-              { jp:"したほうがいい", r:"したほうがいい", m:"é melhor fazer", note:"padrão" },
-              { jp:"思います", r:"おもいます", m:"acho/penso", note:"Vます", vt:"他" }
+              { jp:"机", r:"つくえ", m:"mesa/escrivaninha", note:"lugar" },
+              { jp:"の", r:"の", m:"de", note:"partícula" },
+              { jp:"上", r:"うえ", m:"em cima", note:"posição" },
+              { jp:"に", r:"に", m:"em", note:"partícula" },
+              { jp:"本", r:"ほん", m:"livro", note:"objeto" },
+              { jp:"が", r:"が", m:"sujeito", note:"partícula" },
+              { jp:"あります", r:"あります", m:"há/existe", note:"Vます", vt:"自" }
             ],
             vocab: [
-              { w:"運動する", r:"うんどうする", m:"fazer exercício", vt:"他" },
-              { w:"思う", r:"おもう", m:"achar/pensar", vt:"他" }
+              { w:"本", r:"ほん", m:"livro" },
+              { w:"ある", r:"ある", m:"existir (coisa)", vt:"自" }
+            ]
+          },
+
+          /* +++ ADICIONADO: pergunta (tem?) +++ */
+          {
+            jp: "近くにコンビニがありますか。",
+            jpRuby: "<ruby>近<rt>ちか</rt></ruby>くにコンビニがありますか。",
+            reading: "ちかくに こんびにが ありますか。",
+            pt: "Tem um konbini por perto?",
+            structure: "場所に Nが ありますか",
+            literal: "Por perto, existe konbini?",
+            points: ["Pergunta super comum em viagem/cidade.","近くに = ‘por perto’."],
+            grammar: "場所にNがありますか",
+            breakdown: [
+              { jp:"近く", r:"ちかく", m:"perto / por perto", note:"lugar" },
+              { jp:"に", r:"に", m:"em (existência)", note:"partícula" },
+              { jp:"コンビニ", r:"こんびに", m:"loja de conveniência", note:"katakana" },
+              { jp:"が", r:"が", m:"sujeito", note:"partícula" },
+              { jp:"ありますか", r:"ありますか", m:"tem? existe?", note:"pergunta", vt:"自" }
+            ],
+            vocab: [
+              { w:"近く", r:"ちかく", m:"perto" },
+              { w:"コンビニ", r:"こんびに", m:"loja de conveniência" },
+              { w:"ある", r:"ある", m:"existir (coisa)", vt:"自" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "g_n5_kara_made",
+        level: "ESTRUTURAS",
+        title: "〜から 〜まで",
+        desc: "de X até Y (horário/tempo/local)",
+        tags: ["tempo","範囲"],
+        lines: [
+          {
+            jp: "九時から五時まで働きます。",
+            jpRuby: "<ruby>九時<rt>くじ</rt></ruby>から<ruby>五時<rt>ごじ</rt></ruby>まで<ruby>働<rt>はたら</rt></ruby>きます。",
+            reading: "くじから ごじまで はたらきます。",
+            pt: "Eu trabalho das 9 às 5.",
+            structure: "Xから Yまで Vます",
+            literal: "De 9 até 5, trabalho.",
+            points: ["から = início","まで = fim","Muito comum para horários."],
+            grammar: "XからYまで",
+            breakdown: [
+              { jp:"九時", r:"くじ", m:"nove horas", note:"início" },
+              { jp:"から", r:"から", m:"de (início)", note:"partícula" },
+              { jp:"五時", r:"ごじ", m:"cinco horas", note:"fim" },
+              { jp:"まで", r:"まで", m:"até (fim)", note:"partícula" },
+              { jp:"働きます", r:"はたらきます", m:"trabalho", note:"Vます", vt:"自" }
+            ],
+            vocab: [
+              { w:"働く", r:"はたらく", m:"trabalhar", vt:"自" }
+            ]
+          },
+
+          /* +++ ADICIONADO: dias da semana +++ */
+          {
+            jp: "月曜日から金曜日まで学校があります。",
+            jpRuby: "<ruby>月曜日<rt>げつようび</rt></ruby>から<ruby>金曜日<rt>きんようび</rt></ruby>まで<ruby>学校<rt>がっこう</rt></ruby>があります。",
+            reading: "げつようびから きんようびまで がっこうが あります。",
+            pt: "De segunda a sexta tem escola (aulas).",
+            structure: "Xから Yまで Nがあります",
+            literal: "De segunda até sexta, escola existe.",
+            points: ["Ótimo para falar de rotina semanal.","あります = ‘tem/existe’ (evento/coisa)."],
+            grammar: "XからYまで（範囲）",
+            breakdown: [
+              { jp:"月曜日", r:"げつようび", m:"segunda-feira", note:"início" },
+              { jp:"から", r:"から", m:"de (início)", note:"partícula" },
+              { jp:"金曜日", r:"きんようび", m:"sexta-feira", note:"fim" },
+              { jp:"まで", r:"まで", m:"até (fim)", note:"partícula" },
+              { jp:"学校", r:"がっこう", m:"escola/aulas", note:"substantivo" },
+              { jp:"が", r:"が", m:"sujeito", note:"partícula" },
+              { jp:"あります", r:"あります", m:"tem/há", note:"Vます", vt:"自" }
+            ],
+            vocab: [
+              { w:"月曜日", r:"げつようび", m:"segunda-feira" },
+              { w:"金曜日", r:"きんようび", m:"sexta-feira" },
+              { w:"学校", r:"がっこう", m:"escola" },
+              { w:"ある", r:"ある", m:"existir (coisa)", vt:"自" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "g_n5_temo_ii",
+        level: "ESTRUTURAS",
+        title: "〜てもいいですか",
+        desc: "pedir permissão (posso…?)",
+        tags: ["permite?","てもいい"],
+        lines: [
+          {
+            jp: "ここに座ってもいいですか。",
+            jpRuby: "ここに<ruby>座<rt>すわ</rt></ruby>ってもいいですか。",
+            reading: "ここに すわっても いいですか。",
+            pt: "Posso sentar aqui?",
+            structure: "Vて + もいいですか",
+            literal: "Mesmo sentando aqui, é bom? (posso?)",
+            points: ["Estrutura muito comum para pedir permissão."],
+            grammar: "Vてもいいですか",
+            breakdown: [
+              { jp:"ここ", r:"ここ", m:"aqui", note:"lugar" },
+              { jp:"に", r:"に", m:"em (lugar)", note:"partícula" },
+              { jp:"座って", r:"すわって", m:"sentar (e...)", note:"Vて", vt:"自" },
+              { jp:"も", r:"も", m:"mesmo", note:"partícula" },
+              { jp:"いいですか", r:"いいですか", m:"pode? é ok?", note:"pergunta" }
+            ],
+            vocab: [
+              { w:"座る", r:"すわる", m:"sentar", vt:"自" }
+            ]
+          },
+
+          /* +++ ADICIONADO: permissão em local (foto) +++ */
+          {
+            jp: "写真を撮ってもいいですか。",
+            jpRuby: "<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ってもいいですか。",
+            reading: "しゃしんを とっても いいですか。",
+            pt: "Posso tirar foto?",
+            structure: "Nを Vて + もいいですか",
+            literal: "Mesmo tirando foto, é ok?",
+            points: ["Muito usado em viagens/lojas/museus.","‘〜てもいいですか’ = pedir permissão educadamente."],
+            grammar: "Vてもいいですか（許可）",
+            breakdown: [
+              { jp:"写真", r:"しゃしん", m:"foto", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"撮って", r:"とって", m:"tirar (e...)", note:"Vて", vt:"他" },
+              { jp:"も", r:"も", m:"mesmo", note:"partícula" },
+              { jp:"いいですか", r:"いいですか", m:"pode? é ok?", note:"pergunta" }
+            ],
+            vocab: [
+              { w:"写真", r:"しゃしん", m:"foto" },
+              { w:"撮る", r:"とる", m:"tirar (foto)", vt:"他" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "g_n5_mashou",
+        level: "ESTRUTURAS",
+        title: "〜ましょう / 〜ませんか",
+        desc: "vamos… / que tal…?",
+        tags: ["convite","提案"],
+        lines: [
+          {
+            jp: "一緒にご飯を食べましょう。",
+            jpRuby: "<ruby>一緒<rt>いっしょ</rt></ruby>にご<ruby>飯<rt>はん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べましょう。",
+            reading: "いっしょに ごはんを たべましょう。",
+            pt: "Vamos comer juntos.",
+            structure: "Vましょう",
+            literal: "Vamos (comer).",
+            points: ["ましょう = proposta direta e amigável."],
+            grammar: "Vましょう",
+            breakdown: [
+              { jp:"一緒に", r:"いっしょに", m:"juntos", note:"advérbio" },
+              { jp:"ご飯", r:"ごはん", m:"refeição/arroz", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"食べましょう", r:"たべましょう", m:"vamos comer", note:"Vましょう", vt:"他" }
+            ],
+            vocab: [
+              { w:"一緒に", r:"いっしょに", m:"juntos" },
+              { w:"食べる", r:"たべる", m:"comer", vt:"他" }
+            ]
+          },
+          {
+            jp: "コーヒーを飲みませんか。",
+            jpRuby: "コーヒーを<ruby>飲<rt>の</rt></ruby>みませんか。",
+            reading: "こーひーを のみませんか。",
+            pt: "Que tal tomar um café?",
+            structure: "Vませんか",
+            literal: "Não beberia (comigo)?",
+            points: ["ませんか = convite mais suave/educado."],
+            grammar: "Vませんか",
+            breakdown: [
+              { jp:"コーヒー", r:"こーひー", m:"café", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"飲みませんか", r:"のみませんか", m:"que tal beber?", note:"convite", vt:"他" }
+            ],
+            vocab: [
+              { w:"飲む", r:"のむ", m:"beber", vt:"他" }
+            ]
+          },
+
+          /* +++ ADICIONADO: convite com tempo/lugar +++ */
+          {
+            jp: "明日、駅で会いましょう。",
+            jpRuby: "<ruby>明日<rt>あした</rt></ruby>、<ruby>駅<rt>えき</rt></ruby>で<ruby>会<rt>あ</rt></ruby>いましょう。",
+            reading: "あした、えきで あいましょう。",
+            pt: "Amanhã, vamos nos encontrar na estação.",
+            structure: "(tempo)、(lugar)で Vましょう",
+            literal: "Amanhã, na estação, vamos encontrar.",
+            points: ["ましょう = proposta/combinação.","で = local do encontro/ação."],
+            grammar: "Vましょう（提案）",
+            breakdown: [
+              { jp:"明日", r:"あした", m:"amanhã", note:"tempo" },
+              { jp:"駅", r:"えき", m:"estação", note:"local" },
+              { jp:"で", r:"で", m:"em (local da ação)", note:"partícula" },
+              { jp:"会いましょう", r:"あいましょう", m:"vamos nos encontrar", note:"Vましょう", vt:"自" }
+            ],
+            vocab: [
+              { w:"明日", r:"あした", m:"amanhã" },
+              { w:"駅", r:"えき", m:"estação" },
+              { w:"会う", r:"あう", m:"encontrar", vt:"自" }
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "g_n5_te_kara",
+        level: "ESTRUTURAS",
+        title: "〜てから",
+        desc: "depois de fazer A, faz B (muito usado)",
+        tags: ["順序","てから"],
+        lines: [
+          {
+            jp: "シャワーを浴びてから寝ます。",
+            jpRuby: "シャワーを<ruby>浴<rt>あ</rt></ruby>びてから<ruby>寝<rt>ね</rt></ruby>ます。",
+            reading: "しゃわーを あびてから ねます。",
+            pt: "Depois de tomar banho, eu durmo.",
+            structure: "Vてから Vます",
+            literal: "Após (banho), durmo.",
+            points: ["Em rotina diária, aparece muito."],
+            grammar: "Vてから",
+            breakdown: [
+              { jp:"シャワー", r:"しゃわー", m:"chuveiro", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"浴びて", r:"あびて", m:"tomar (banho) e...", note:"Vて", vt:"他" },
+              { jp:"から", r:"から", m:"depois de", note:"partícula" },
+              { jp:"寝ます", r:"ねます", m:"durmo", note:"Vます", vt:"自" }
+            ],
+            vocab: [
+              { w:"浴びる", r:"あびる", m:"tomar/receber (banho)", vt:"他" },
+              { w:"寝る", r:"ねる", m:"dormir", vt:"自" }
+            ]
+          },
+
+          /* +++ ADICIONADO: sequência comum (comer e tomar remédio) +++ */
+          {
+            jp: "ご飯を食べてから、薬を飲みます。",
+            jpRuby: "ご<ruby>飯<rt>はん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べてから、<ruby>薬<rt>くすり</rt></ruby>を<ruby>飲<rt>の</rt></ruby>みます。",
+            reading: "ごはんを たべてから、くすりを のみます。",
+            pt: "Depois de comer, eu tomo remédio.",
+            structure: "Vてから、NをVます",
+            literal: "Depois de comer, remédio eu tomo.",
+            points: ["〜てから = primeiro A, depois B.","Bem útil em situações do cotidiano/saúde."],
+            grammar: "Vてから（順序）",
+            breakdown: [
+              { jp:"ご飯", r:"ごはん", m:"refeição/arroz", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"食べて", r:"たべて", m:"comer (depois de...)", note:"Vて", vt:"他" },
+              { jp:"から", r:"から", m:"depois de", note:"partícula" },
+              { jp:"薬", r:"くすり", m:"remédio", note:"objeto" },
+              { jp:"を", r:"を", m:"objeto", note:"partícula" },
+              { jp:"飲みます", r:"のみます", m:"tomo (beber)", note:"Vます", vt:"他" }
+            ],
+            vocab: [
+              { w:"薬", r:"くすり", m:"remédio" },
+              { w:"飲む", r:"のむ", m:"beber/tomar (remédio)", vt:"他" },
+              { w:"食べる", r:"たべる", m:"comer", vt:"他" }
             ]
           }
         ]
       }
     ];
 
-    /***********************
-     * STATE + STORAGE
-     ***********************/
-    const LS_KEY = "nihongo_textlab_v4";
+    const LS_KEY = "nihongo_textlab_v6_n5_common_only";
     const defaultState = {
       texts: [],
       activeTextId: null,
@@ -1387,8 +2269,7 @@
         showReading: true,
         showPT: true,
         fontScale: 1,
-        hue: 210,
-        levelView: "N5",
+        view: "TEXTOS",
         appearance: "light"
       },
       progress: {},
@@ -1430,16 +2311,12 @@
         refreshKPIs();
       }, ms);
     }
-
     function saveStateNow(){
       clearTimeout(saveTimer);
       localStorage.setItem(LS_KEY, JSON.stringify(state));
       refreshKPIs();
     }
 
-    /***********************
-     * HELPERS
-     ***********************/
     const $ = (sel, root=document) => root.querySelector(sel);
     const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
     const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
@@ -1475,22 +2352,17 @@
       return arr;
     }
 
-    // ✅ EXIBIÇÃO EM PT-BR
     function vtLabel(vt){
       if(vt === "他") return "Verbo transitivo";
       if(vt === "自") return "Verbo intransitivo";
       return "";
     }
 
-    /***********************
-     * THEME + Appearance
-     ***********************/
     function applyAppearance(){
       const isDark = (state.ui.appearance === "dark");
       document.body.classList.toggle("theme-dark", isDark);
       $("#btnTheme").textContent = `Aparência: ${isDark ? "Escuro" : "Claro"}`;
     }
-
     function toggleAppearance(){
       state.ui.appearance = (state.ui.appearance === "dark") ? "light" : "dark";
       saveStateDebounced();
@@ -1498,58 +2370,38 @@
       toast(state.ui.appearance === "dark" ? "Escuro" : "Claro");
     }
 
-    function startTheme(){
-      let hue = state.ui?.hue ?? 210;
-
-      setInterval(()=>{
-        hue = (hue + 9) % 360;
-        document.documentElement.style.setProperty("--hue", hue);
-        state.ui.hue = hue;
-        // salva de tempos em tempos (sem mostrar hsl na UI)
-        if(hue % 90 === 0) saveStateDebounced(0);
-      }, 3500);
-
-      document.documentElement.style.setProperty("--hue", hue);
-    }
-
-    /***********************
-     * LEVEL VIEW
-     ***********************/
-    function setLevelView(level){
-      state.ui.levelView = level;
-      $("#segN5").classList.toggle("active", level==="N5");
-      $("#segN4").classList.toggle("active", level==="N4");
+    function setView(view){
+      state.ui.view = view;
+      $("#segTEXTOS").classList.toggle("active", view==="TEXTOS");
+      $("#segEST").classList.toggle("active", view==="ESTRUTURAS");
       saveStateDebounced();
       renderLibrary();
 
       const active = getTextById(state.activeTextId);
-      if(!active || active.level !== level){
-        const first = allTexts().find(t=>t.level===level);
+      if(!active || active.level !== view){
+        const first = allTexts().find(t=>t.level===view);
         state.activeTextId = first ? first.id : null;
         saveStateDebounced();
       }
       renderMain();
     }
 
-    /***********************
-     * RENDER: LIBRARY
-     ***********************/
     function renderLibrary(){
       const list = $("#libraryList");
       const q = $("#searchInput").value.trim().toLowerCase();
-      const level = state.ui.levelView || "N5";
+      const view = state.ui.view || "TEXTOS";
 
-      const texts = allTexts()
-        .filter(t => t.level === level)
+      const items = allTexts()
+        .filter(t => t.level === view)
         .filter(t => {
           if(!q) return true;
           const hay = `${t.title} ${t.desc} ${(t.tags||[]).join(" ")} ${(t.lines||[]).map(l=>l.jp).join(" ")}`;
           return hay.toLowerCase().includes(q);
         });
 
-      $("#kpiTexts").textContent = texts.length;
+      $("#kpiTexts").textContent = items.length;
 
-      list.innerHTML = texts.map(t=>{
+      list.innerHTML = items.map(t=>{
         const p = ensureProgress(t.id);
         const done = Object.keys(p.doneLines||{}).length;
         const total = (t.lines||[]).length;
@@ -1563,14 +2415,14 @@
                 <p class="itemDesc">${escapeHTML(t.desc || "")}</p>
               </div>
               <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
-                <span class="tag"><b>${escapeHTML(t.level)}</b></span>
+                <span class="tag"><b>${escapeHTML(view === "TEXTOS" ? "TEXTOS N5" : "ESTRUTURAS N5")}</b></span>
                 <span class="tag">${done}/${total} • ${pct}%</span>
                 <span class="tag">${p.bookmarked ? "★" : "☆"}</span>
               </div>
             </div>
           </div>
         `;
-      }).join("") || `<div class="muted" style="font-size:12px">Nenhum texto encontrado neste nível.</div>`;
+      }).join("") || `<div class="muted" style="font-size:12px">Nada encontrado aqui.</div>`;
 
       $$(".item", list).forEach(el=>{
         el.addEventListener("click", ()=>{
@@ -1580,9 +2432,6 @@
       });
     }
 
-    /***********************
-     * RENDER: MAIN
-     ***********************/
     function setActiveText(id){
       state.activeTextId = id;
       ensureProgress(id);
@@ -1618,8 +2467,8 @@
         const b = $(id); if(b) b.textContent = `Tradução: ${p}`;
       });
 
-      $("#segN5").classList.toggle("active", (state.ui.levelView||"N5")==="N5");
-      $("#segN4").classList.toggle("active", (state.ui.levelView||"N5")==="N4");
+      $("#segTEXTOS").classList.toggle("active", (state.ui.view||"TEXTOS")==="TEXTOS");
+      $("#segEST").classList.toggle("active", (state.ui.view||"TEXTOS")==="ESTRUTURAS");
     }
 
     function toggleFurigana(){ state.ui.showFurigana = !state.ui.showFurigana; saveStateDebounced(); syncToggleButtons(); renderMain(); }
@@ -1630,28 +2479,29 @@
     function fontMinus(){ applyFontScale((state.ui.fontScale||1) - 0.05); renderMain(); }
 
     function renderMain(){
-      const text = getTextById(state.activeTextId);
+      const item = getTextById(state.activeTextId);
       const empty = $("#emptyState");
 
       applyFontScale(state.ui.fontScale || 1);
       syncToggleButtons();
 
-      if(!text){
+      if(!item){
         empty.style.display = "block";
         ["#tab_TEXT","#tab_VOCAB","#tab_FLASH","#tab_QUIZ","#tab_NOTES"].forEach(id=>$(id).style.display="none");
-        $("#textTitle").textContent = "Selecione um texto";
+        $("#textTitle").textContent = "Selecione um item";
         $("#textMeta").innerHTML = "";
         return;
       }
 
       empty.style.display = "none";
 
-      $("#textTitle").textContent = text.title;
-      const pr = ensureProgress(text.id);
+      $("#textTitle").textContent = item.title;
+      const pr = ensureProgress(item.id);
+      const viewLabel = item.level === "TEXTOS" ? "TEXTOS N5" : "ESTRUTURAS N5";
 
       $("#textMeta").innerHTML = `
-        <span class="tag"><b>${escapeHTML(text.level)}</b></span>
-        <span class="tag">🧾 ${text.lines.length} linhas</span>
+        <span class="tag"><b>${escapeHTML(viewLabel)}</b></span>
+        <span class="tag">🧾 ${item.lines.length} linhas</span>
         <span class="tag">✅ ${Object.keys(pr.doneLines||{}).length} revisadas</span>
         <span class="tag">${pr.bookmarked ? "★ Favorito" : "☆"}</span>
       `;
@@ -1671,26 +2521,30 @@
         t.classList.toggle("active", t.dataset.tab === tab);
       });
 
-      renderLines(text, $("#lineList"));
-      renderLines(text, $("#focusLineList"));
-      renderVocab(text);
-      renderNotes(text);
+      renderLines(item, $("#lineList"));
+
+      if($("#focusOverlay").classList.contains("open")){
+        renderLines(item, $("#focusLineList"));
+      }
+
+      renderVocab(item);
+      renderNotes(item);
       renderDeckUI();
     }
 
-    function renderLines(text, root){
-      const pr = ensureProgress(text.id);
+    function renderLines(item, root){
+      const pr = ensureProgress(item.id);
       const showF = !!state.ui.showFurigana;
       const showR = !!state.ui.showReading;
       const showPT = !!state.ui.showPT;
 
-      root.innerHTML = text.lines.map((ln, idx)=>{
+      root.innerHTML = item.lines.map((ln, idx)=>{
         const done = !!pr.doneLines?.[idx];
         const jpHTML = (showF && ln.jpRuby) ? ln.jpRuby : escapeHTML(ln.jp);
         const reading = showR ? `<div class="reading">${escapeHTML(ln.reading||"")}</div>` : "";
 
-        const noteKey = `lineNote_${text.id}_${idx}`;
-        const lineNote = (state.progress[text.id]?.[noteKey]) || "";
+        const noteKey = `lineNote_${item.id}_${idx}`;
+        const lineNote = (state.progress[item.id]?.[noteKey]) || "";
 
         const structure = ln.structure ? escapeHTML(ln.structure) : "—";
         const literal = ln.literal ? escapeHTML(ln.literal) : "—";
@@ -1780,7 +2634,7 @@
 
                 <div class="box">
                   <div class="boxTitle"><b>Minha nota</b></div>
-                  <textarea class="textarea" data-action="lineNote" placeholder="Escreva aqui (auto-save)..." style="min-height:90px">${escapeHTML(lineNote)}</textarea>
+                  <textarea class="textarea" data-action="lineNote" placeholder="Escreva aqui (salva automaticamente)..." style="min-height:90px">${escapeHTML(lineNote)}</textarea>
                 </div>
               </div>
             </div>
@@ -1794,7 +2648,7 @@
         const btnToggle = $("[data-action=toggle]", card);
 
         chk.addEventListener("change", ()=>{
-          const pr2 = ensureProgress(text.id);
+          const pr2 = ensureProgress(item.id);
           if(chk.checked) pr2.doneLines[idx] = true;
           else delete pr2.doneLines[idx];
           saveStateDebounced(0);
@@ -1807,13 +2661,13 @@
 
         const noteArea = $("[data-action=lineNote]", card);
         noteArea.addEventListener("input", ()=>{
-          const key = `lineNote_${text.id}_${idx}`;
-          state.progress[text.id][key] = noteArea.value;
+          const key = `lineNote_${item.id}_${idx}`;
+          state.progress[item.id][key] = noteArea.value;
           saveStateDebounced(450);
         });
 
         $("[data-action=addLineVocab]", card).addEventListener("click", ()=>{
-          addVocabToDeck(text.lines[idx].vocab||[]);
+          addVocabToDeck(item.lines[idx].vocab||[]);
           renderDeckUI();
           refreshKPIs();
           toast("Adicionado ao deck ✅");
@@ -1821,7 +2675,7 @@
 
         $("[data-action=copyJP]", card).addEventListener("click", async ()=>{
           try{
-            await navigator.clipboard.writeText(text.lines[idx].jp);
+            await navigator.clipboard.writeText(item.lines[idx].jp);
             toast("JP copiado ✅");
           }catch{
             toast("Não foi possível copiar.");
@@ -1830,9 +2684,9 @@
       });
     }
 
-    function aggregateVocab(text){
+    function aggregateVocab(item){
       const map = new Map();
-      for(const ln of (text.lines||[])){
+      for(const ln of (item.lines||[])){
         for(const v of (ln.vocab||[])){
           const k = wordKey(v);
           if(!map.has(k)) map.set(k, { ...v, count: 0 });
@@ -1842,12 +2696,12 @@
       return Array.from(map.values()).sort((a,b)=>b.count-a.count || a.w.localeCompare(b.w));
     }
 
-    function renderVocab(text){
+    function renderVocab(item){
       const grid = $("#vocabGrid");
-      const vocab = aggregateVocab(text);
+      const vocab = aggregateVocab(item);
 
       if(!vocab.length){
-        grid.innerHTML = `<div class="muted" style="font-size:12px">Sem vocabulário neste texto.</div>`;
+        grid.innerHTML = `<div class="muted" style="font-size:12px">Sem vocabulário neste item.</div>`;
         return;
       }
 
@@ -1881,7 +2735,7 @@
           const k = btn.getAttribute("data-add");
           const v = vocab.find(x=>wordKey(x)===k);
           if(v) addVocabToDeck([v]);
-          renderVocab(text);
+          renderVocab(item);
           renderDeckUI();
           refreshKPIs();
           toast("Adicionado ✅");
@@ -1893,7 +2747,7 @@
           const k = btn.getAttribute("data-remove");
           if(state.deck[k]) delete state.deck[k];
           saveStateDebounced();
-          renderVocab(text);
+          renderVocab(item);
           renderDeckUI();
           refreshKPIs();
           toast("Removido.");
@@ -1901,9 +2755,9 @@
       });
     }
 
-    function renderNotes(text){
+    function renderNotes(item){
       const area = $("#textNotes");
-      const pr = ensureProgress(text.id);
+      const pr = ensureProgress(item.id);
       area.value = pr.notes || "";
       area.oninput = ()=>{
         pr.notes = area.value;
@@ -1911,9 +2765,6 @@
       };
     }
 
-    /***********************
-     * DECK
-     ***********************/
     function addVocabToDeck(arr){
       const now = Date.now();
       for(const v of arr){
@@ -1971,7 +2822,7 @@
       $("#flashReading").textContent = (card.r || "") + vt;
 
       $("#flashMeaning").textContent = card.m || "";
-      $("#deckStatus").textContent = `Cards: ${total} • Devidos agora: ${dueCount}`;
+      $("#deckStatus").textContent = `Cartões: ${total} • Devidos agora: ${dueCount}`;
     }
 
     function rateCard(score){
@@ -2002,16 +2853,13 @@
       renderDeckUI();
     }
 
-    /***********************
-     * QUIZ
-     ***********************/
     function buildQuizItems(source, count){
       let pool = [];
       if(source === "DECK"){
         pool = Object.values(state.deck).map(x=>({ w:x.w, r:x.r, m:x.m, vt:x.vt||"" }));
       }else{
-        const text = getTextById(state.activeTextId);
-        if(text) pool = aggregateVocab(text).map(x=>({ w:x.w, r:x.r, m:x.m, vt:x.vt||"" }));
+        const item = getTextById(state.activeTextId);
+        if(item) pool = aggregateVocab(item).map(x=>({ w:x.w, r:x.r, m:x.m, vt:x.vt||"" }));
       }
       pool = pool.filter(x=>x.w && x.m);
 
@@ -2073,13 +2921,10 @@
       });
     }
 
-    /***********************
-     * BOOKMARK / BULK OPEN
-     ***********************/
     function toggleBookmark(){
-      const text = getTextById(state.activeTextId);
-      if(!text) return;
-      const pr = ensureProgress(text.id);
+      const item = getTextById(state.activeTextId);
+      if(!item) return;
+      const pr = ensureProgress(item.id);
       pr.bookmarked = !pr.bookmarked;
       saveStateDebounced();
       renderLibrary();
@@ -2097,7 +2942,7 @@
     }
 
     function resetProgress(){
-      if(!confirm("Resetar progresso (revisadas, favoritos e notas)? Deck e textos ficam.")) return;
+      if(!confirm("Resetar progresso (revisadas, favoritos e notas)? O deck e os itens continuam.")) return;
       state.progress = {};
       saveStateNow();
       renderLibrary();
@@ -2105,9 +2950,6 @@
       toast("Progresso resetado.");
     }
 
-    /***********************
-     * KPI
-     ***********************/
     function refreshKPIs(){
       let doneTotal = 0;
       for(const tid of Object.keys(state.progress||{})){
@@ -2117,9 +2959,6 @@
       $("#kpiDeck").textContent = Object.keys(state.deck||{}).length;
     }
 
-    /***********************
-     * TOAST
-     ***********************/
     let toastTimer = null;
     function toast(msg){
       clearTimeout(toastTimer);
@@ -2160,15 +2999,12 @@
       toastTimer = setTimeout(()=>{ el.style.opacity = "0"; }, 1600);
     }
 
-    /***********************
-     * EVENTS + INIT
-     ***********************/
     function bindEvents(){
       $$(".tab").forEach(t=> t.addEventListener("click", ()=> setTab(t.dataset.tab)));
       $("#searchInput").addEventListener("input", renderLibrary);
 
-      $("#segN5").addEventListener("click", ()=> setLevelView("N5"));
-      $("#segN4").addEventListener("click", ()=> setLevelView("N4"));
+      $("#segTEXTOS").addEventListener("click", ()=> setView("TEXTOS"));
+      $("#segEST").addEventListener("click", ()=> setView("ESTRUTURAS"));
 
       $("#btnToggleFuri").addEventListener("click", toggleFurigana);
       $("#btnToggleFuri2").addEventListener("click", toggleFurigana);
@@ -2194,7 +3030,11 @@
       $("#btnExpandAll").addEventListener("click", expandAll);
       $("#btnCollapseAll").addEventListener("click", collapseAll);
 
-      $("#btnFocus").addEventListener("click", ()=> $("#focusOverlay").classList.add("open"));
+      $("#btnFocus").addEventListener("click", ()=>{
+        $("#focusOverlay").classList.add("open");
+        const item = getTextById(state.activeTextId);
+        if(item) renderLines(item, $("#focusLineList"));
+      });
       $("#btnExitFocus").addEventListener("click", ()=> $("#focusOverlay").classList.remove("open"));
 
       $("#btnTheme").addEventListener("click", toggleAppearance);
@@ -2215,12 +3055,12 @@
       $("#btnNewQuiz").addEventListener("click", renderQuiz);
 
       $("#btnClearNotes").addEventListener("click", ()=>{
-        const text = getTextById(state.activeTextId);
-        if(!text) return;
-        if(!confirm("Limpar as notas deste texto?")) return;
-        ensureProgress(text.id).notes = "";
+        const item = getTextById(state.activeTextId);
+        if(!item) return;
+        if(!confirm("Limpar as notas deste item?")) return;
+        ensureProgress(item.id).notes = "";
         saveStateNow();
-        renderNotes(text);
+        renderNotes(item);
         toast("Notas limpas.");
       });
 
@@ -2245,21 +3085,19 @@
         showReading:true,
         showPT:true,
         fontScale:1,
-        hue:210,
-        levelView:"N5",
+        view:"TEXTOS",
         appearance:"light"
       }, state.ui || {});
 
       applyAppearance();
       applyFontScale(state.ui.fontScale || 1);
 
-      startTheme();
       bindEvents();
 
-      setLevelView(state.ui.levelView || "N5");
+      setView(state.ui.view || "TEXTOS");
 
       if(!state.activeTextId){
-        const first = allTexts().find(t=>t.level === (state.ui.levelView||"N5"));
+        const first = allTexts().find(t=>t.level === (state.ui.view||"TEXTOS"));
         state.activeTextId = first ? first.id : null;
         saveStateDebounced();
       }
